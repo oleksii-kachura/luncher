@@ -1,6 +1,6 @@
-var path = location.pathname;
-
 $(document).ready(function() {
+    var path = location.pathname;
+
     if (/Auth.Login/.test(path)) {
         // autologin
         $('#Login').val('alex.kachura@maxymiser.com');
