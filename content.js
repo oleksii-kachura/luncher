@@ -1,11 +1,12 @@
 $(document).ready(function() {
-    var path = location.pathname;
+    var path = location.pathname,
+        href = location.href;
 
     if (/Auth.Login/.test(path)) {
         // autologin
         $('#Login').val('');
         $('#Password').val('');
-        $('#Login').text().length && $('#Password').text().length && $('#Login[type=submit]').click();
+        $('#Login[type=submit]').click();
     }
 
     if (/CampaignBuilder.*DomainLocations.Add/.test(path)) {
@@ -23,11 +24,11 @@ $(document).ready(function() {
             $('#bApply').click();
 
             // show 50 actions per page
-            $('#grid').find('.k-item:contains(50)').click();
+            $('.k-list-container .k-item:contains(50)').click();
         }, 500);
     }
 
-    if (/CampaignBuilder.*DomainLocations$/.test(location.href)) {
+    if (/CampaignBuilder.*DomainLocations$/.test(href)) {
         // show 50 Site pages per page TODO: try to do it by setting URL params
         setTimeout(function() {
             $('#GridLocations').find('.t-dropdown-wrap.t-state-default').click();
