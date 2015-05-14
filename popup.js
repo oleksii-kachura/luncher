@@ -1,12 +1,9 @@
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (key in changes) {
         var storageChange = changes[key];
-        console.log('Storage key "%s" in namespace "%s" changed. ' +
+        console.log('Storage key "%s" in namespace "%s" changed.\n' +
             'Old value was "%s", new value is "%s".',
-            key,
-            namespace,
-            storageChange.oldValue,
-            storageChange.newValue);
+            key, namespace, storageChange.oldValue, storageChange.newValue);
     }
 });
 
