@@ -1,12 +1,25 @@
-$(document).ready(function() {
-    var path = location.pathname,
-        href = location.href;
+var path = location.pathname,
+    href = location.href,
+    login, password;
 
+$(document).ready(function() {
     if (/Auth.Login/.test(path)) {
         // autologin
-        $('#Login').val('');
-        $('#Password').val('');
-        $('#Login[type=submit]').click();
+        chrome.storage.local.get('autologin', function (result) {
+            if (result.autologin && !$('.auth-top-messages').text().replace(/\s/g, '').length) {
+                chrome.storage.local.get('login', function (result) {
+                    login = result.login;
+                    $("#Login").val(login);
+
+                    chrome.storage.local.get('password', function (result) {
+                        password = result.password;
+                        $("#Password").val(password);
+
+                        if (login && password) $('#Login[type=submit]').click();
+                    });
+                });
+            }
+        });
     }
 
     if (/CampaignBuilder.*DomainLocations.Add/.test(path)) {
