@@ -3,8 +3,8 @@ $(document).ready(function() {
 
     if (/Auth.Login/.test(path)) {
         // autologin
-        $('#Login').val('');
-        $('#Password').val('');
+        $('#Login').val('alex.kachura@maxymiser.com');
+        $('#Password').val('adgjmptW!12');
         $('#Login[type=submit]').click();
     }
 
@@ -28,7 +28,7 @@ $(document).ready(function() {
     }
 
     if (/CampaignBuilder.*DomainLocations/.test(path)) {
-        // show 50 Site pages per page TODO: try to do by it setting URL params
+        // show 50 Site pages per page TODO: try to do it by setting URL params
         //setTimeout(function() {
         //    if ($('.t-input').text() === '50') {
         //        return;
