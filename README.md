@@ -1,2 +1,2 @@
 # UI-Fixer
-Chrome extension that fixes a few things in Maxymiser UI
+Chrome extension that lets you customize a few things in Maxymiser UI
