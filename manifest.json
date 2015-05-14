@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "UI fixer",
+  "version": "1.0",
+  "description": "This extension fixes a few things in UI",
+  "permissions": [ "tabs"],
+  "icons": {
+    "16":  "icon16.png",
+    "48":  "icon48.png",
+    "128": "icon128.png"
+  },
+  "page_action": {
+    "default_icon": {
+      "19": "icon19.png",
+      "38": "icon38.png"
+    },
+    "default_title": "UI fixer"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://ui61.maxymiser.com/*"],
+      "js":      ["jquery.js", "content.js"],
+      "run_at":  "document_end"
+    }
+  ],
+
+  "background": {
+    "scripts" : ["background.js"]
+  }
+}
