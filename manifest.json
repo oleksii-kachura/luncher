@@ -21,7 +21,7 @@
     {
       "matches": ["*://ui61.maxymiser.com/*"],
       "js":      ["jquery.js", "content.js"],
-      "run_at":  "document_end"
+      "run_at":  "document_start"
     }
   ],
 
