@@ -28,7 +28,7 @@ $(document).ready(function() {
     }
 
     if (/CampaignBuilder.*DomainLocations/.test(path)) {
-        // show 50 Site pages per page TODO: try to do it setting URL params
+        // show 50 Site pages per page TODO: try to do by it setting URL params
         //setTimeout(function() {
         //    if ($('.t-input').text() === '50') {
         //        return;
