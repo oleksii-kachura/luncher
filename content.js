@@ -4,7 +4,7 @@ $(document).ready(function() {
     if (/Auth.Login/.test(path)) {
         // autologin
         $('#Login').val('alex.kachura@maxymiser.com');
-        $('#Password').val('adgjmptW!12');
+        $('#Password').val('');
         $('#Login[type=submit]').click();
     }
 
@@ -33,11 +33,9 @@ $(document).ready(function() {
         //    if ($('.t-input').text() === '50') {
         //        return;
         //    }
-        //
         //    $('.t-dropdown-wrap.t-state-default').click();
         //    $('.t-item:contains(50)').click();
         //}, 500);
-        // test commit
     }
 
     if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
