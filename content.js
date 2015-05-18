@@ -5,13 +5,13 @@ var path = location.pathname,
 $(document).ready(function() {
     if (/Auth.Login/.test(path)) {
         // autologin
-        chrome.storage.local.get('autologin', function (result) {
+        chrome.storage.local.get('autologin', function(result) {
             if (result.autologin && !$('.auth-top-messages').text().replace(/\s/g, '').length) {
-                chrome.storage.local.get('login', function (result) {
+                chrome.storage.local.get('login', function(result) {
                     login = result.login;
                     $("#Login").val(login);
 
-                    chrome.storage.local.get('password', function (result) {
+                    chrome.storage.local.get('password', function(result) {
                         password = result.password;
                         $("#Password").val(password);
 
@@ -25,6 +25,11 @@ $(document).ready(function() {
     if (/CampaignBuilder.*DomainLocations.Add/.test(path)) {
         // check Overlay option by default
         $('#IsOverlay').click();
+        $('#ProcessingOrder').val(0);
+        $('#form0').find('.mm-switcher.disabled').addClass('enabled');
+        
+        // add description
+        !function() {var c = function(a) {return Array.prototype.slice.call(a)},d= (new Date).toLocaleString().replace(/\//g, "."),f = $("#user_login input.mm-dd-input:eq(0)").val(),b = c(document.querySelectorAll("#Description, #description, #descr-textarea-id")),e = [],v;e = c(document.querySelectorAll("iframe")).filter(function(a) {return a.src.match(new RegExp("^" + location.protocol + "//" + document.domain.replace(/./g, "."))) || "" === a.src}).map(function(a) {return a.contentDocument.querySelector("#Description, #description")}).filter(function(a) {return null != a});b = b.concat(e);v = '[' + d.substring(0, d.indexOf("M") - 11) + " by " + f + ']\n';b.length && (b[0].value = b[0].value ? v + b[0].value : v);b[0].focus();}();
     }
 
     if (/Admin.*ActionLog/.test(path)) {
