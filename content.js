@@ -39,6 +39,7 @@ $(document).ready(function() {
             $('#IP').click();
             $('#COUNTRY').click();
             $('#CAMPAIGN').click();
+            $('#BROWSER').click();
             $('#bApply').click();
 
             // show 50 actions per page
