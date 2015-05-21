@@ -55,6 +55,14 @@ $(document).ready(function() {
         }, 500);
     }
 
+    if (/CampaignBuilder.*CampaignBrowserRules$/.test(href)) {
+        // show 50 Site pages per page TODO: try to do it by setting URL params like this: location.assign(href + '?Grid-page=1&Grid-orderBy=~&Grid-filter=~&Grid-size=50');
+        setTimeout(function() {
+            $('#Grid').find('.t-dropdown-wrap.t-state-default').click();
+            $('.t-animation-container .t-item:contains(50)').click();
+        }, 500);
+    }
+
     if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
         // improve Content Manager
         setTimeout(function() {
