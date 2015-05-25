@@ -44,7 +44,12 @@ $(document).ready(function() {
 
             // show 50 actions per page
             $('.k-list-container .k-item:contains(50)').click();
-        }, 500);
+            $('#bRefresh, #bApply').click(function(){
+                setTimeout(function() {
+                    $('.k-list-container .k-item:contains(50)').click();
+                }, 900);
+            })
+        }, 600);
     }
 
     if (/CampaignBuilder.*DomainLocations$/.test(href)) {
