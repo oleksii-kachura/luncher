@@ -25,7 +25,7 @@ $(document).ready(function() {
     if (/CampaignBuilder.*DomainLocations.Add/.test(path)) {
         // check Overlay option by default
         $('#IsOverlay').click();
-        $('#ProcessingOrder').val(0);
+        //$('#ProcessingOrder').val(0);
         $('#form0').find('.mm-switcher.disabled').addClass('enabled');
         
         // add description
