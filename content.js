@@ -25,7 +25,7 @@ $(document).ready(function() {
     if (/CampaignBuilder.*DomainLocations.Add/.test(path)) {
         // check Overlay option by default
         $('#IsOverlay').click();
-        //$('#ProcessingOrder').val(0);
+        $('#ProcessingOrder').val(200);
         $('#form0').find('.mm-switcher.disabled').addClass('enabled');
         
         // add description
@@ -52,7 +52,7 @@ $(document).ready(function() {
         }, 600);
     }
 
-    if (/CampaignBuilder.*DomainLocations$/.test(href)) {
+    if (/CampaignBuilder.*DomainLocations$/.test(href) && !$('#Url').val()) {
         // show 50 Site pages per page TODO: try to do it by setting URL params
         setTimeout(function() {
             $('#GridLocations').find('.t-dropdown-wrap.t-state-default').click();
