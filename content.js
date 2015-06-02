@@ -69,8 +69,8 @@ $(document).ready(function() {
         autoLogin();
     }
 
-    if (/CampaignBuilder.*DomainLocations$/.test(href) && !$('#Url').val()) {
-        show50ItemsPerPage();
+    if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
+        improveContentManager();
     }
 
     if (/CampaignBuilder.*CampaignBrowserRules$/.test(href)) {
@@ -81,12 +81,12 @@ $(document).ready(function() {
         show50ItemsPerPage();
     }
 
-    if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
-        improveContentManager();
-    }
-
     if (/CampaignBuilder.*DomainActions.Add/.test(path)) {
         addDescription();
+    }
+
+    if (/CampaignBuilder.*DomainLocations$/.test(href)) {
+        !$('#Url').val() && show50ItemsPerPage();
     }
 
     if (/CampaignBuilder.*DomainLocations.Add/.test(path)) {
