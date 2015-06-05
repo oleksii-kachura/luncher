@@ -1,8 +1,27 @@
+<link rel="stylesheet" href="styles.css"/>
 <script src="jquery.js"></script>
+
 <section>
-    <label><input id="settings-autologin" type="checkbox" />Autologin</label>
-    <input id="settings-login" type="email" placeholder="Login" />
-    <input id="settings-password" type="password" placeholder="Password" />
-    <button id="settings-save">Save</button>
+    <label>
+        <input id="settings-autoLogin" type="checkbox"/>Autologin
+        <input id="settings-login" type="email" placeholder="Login"/>
+        <input id="settings-password" type="password" placeholder="Password"/>
+    </label>
 </section>
+<section>
+    <label title="More than 20 and less than 500">
+        <input id="settings-moreItems" type="checkbox"/>Show more items per page
+        <input id="settings-numberOfItems" type="number" placeholder="How many?"/>
+    </label>
+</section>
+<section class="actionLogFilters">
+    <label title="Date, Campaign, Content, Actions, Browser">
+        <input id="settings-actionLogFilters" type="checkbox"/>Set Action Log filters
+    </label>
+</section>
+<section>
+    <button id="settings-save">Save</button>
+    <span id="settings-notification">Settings saved!</span>
+</section>
+
 <script type="text/javascript" src="popup.js"></script>
