@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "UI fixer",
-  "version": "0.2",
+  "version": "1.0",
   "description": "Chrome extension that lets you customize a few things in Maxymiser UI",
 
   "permissions": ["tabs", "storage"],
