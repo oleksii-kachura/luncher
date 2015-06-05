@@ -8,6 +8,7 @@ function saveChanges() {
         login            = $('#settings-login').val(),
         password         = $('#settings-password').val(),
         actionLogFilters = $('#settings-actionLogFilters').prop('checked'),
+        addDescription   = $('#settings-addDescription').prop('checked'),
         moreItems        = $('#settings-moreItems').prop('checked'),
         numberOfItems    = $numberOfItems.val();
 
@@ -24,6 +25,7 @@ function saveChanges() {
         autoLogin:        autoLogin,
         moreItems:        moreItems,
         numberOfItems:    numberOfItems,
+        addDescription:   addDescription,
         actionLogFilters: actionLogFilters
     });
 
@@ -34,7 +36,7 @@ function saveChanges() {
 
 // retrieve settings from chrome storage and set current state to the view of the popup
 chrome.storage.local.get([
-    'autoLogin', 'login', 'password', 'moreItems', 'numberOfItems', 'actionLogFilters'
+    'autoLogin', 'login', 'password', 'moreItems', 'numberOfItems', 'actionLogFilters', 'addDescription'
 ], function(settings) {
     $(document).ready(function() {
         $('#settings-autoLogin').prop('checked', !!settings.autoLogin);
@@ -42,6 +44,7 @@ chrome.storage.local.get([
         $("#settings-password").val(settings.password || '');
         $('#settings-moreItems').prop('checked', !!settings.moreItems);
         $('#settings-numberOfItems').val(settings.numberOfItems || 50);
+        $('#settings-addDescription').prop('checked', !!settings.addDescription);
         $('#settings-actionLogFilters').prop('checked', !!settings.actionLogFilters);
 
         $('#settings-save').click(saveChanges);

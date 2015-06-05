@@ -8,7 +8,8 @@
 
 ;
 (function() {
-    var path     = location.pathname,
+    var $        = window.$,
+        path     = location.pathname,
         href     = location.href,
         settings = {};
 
@@ -46,10 +47,10 @@
      * Automatically logs you in with credentials specified in settings.
      */
     function autoLogin() {
-        if (settings.autoLogin && !$('.auth-top-messages').text().replace(/\s/g, '').length) {
-            settings.login && $("#Login").val(settings.login);
-            settings.password && $("#Password").val(settings.password);
-            settings.login && settings.password && $('#Login[type=submit]').click();
+        if (settings.login && settings.password && !$('.auth-top-messages').text().replace(/\s/g, '').length) {
+            $("#Login").val(settings.login);
+            $("#Password").val(settings.password);
+            $('#Login[type=submit]').click();
         }
     }
 
@@ -58,14 +59,11 @@
      * @param params - Use this argument if URL parameters which set grid size differ from standard ones.
      */
     function showMoreItemsPerPage(params) {
-        var numberOfItems;
-        if (settings.moreItems) {
-            numberOfItems = settings.numberOfItems || 50;
-            params = params
-                ? params.replace(/50/g, numberOfItems)
-                : '?Grid-page=1&Grid-orderBy=~&Grid-filter=~&Grid-size=' + numberOfItems;
-            location.assign(href + params);
-        }
+        var numberOfItems = settings.numberOfItems || 50;
+        params = params
+            ? params.replace(/50/g, numberOfItems)
+            : '?Grid-page=1&Grid-orderBy=~&Grid-filter=~&Grid-size=' + numberOfItems;
+        location.assign(href + params);
     }
 
     /**
@@ -82,23 +80,23 @@
 
     /* Run */
     chrome.storage.local.get([
-        'autoLogin', 'login', 'password', 'moreItems', 'numberOfItems', 'actionLogFilters'
+        'autoLogin', 'login', 'password', 'moreItems', 'numberOfItems', 'actionLogFilters', 'addDescription'
     ], function(result) {
         settings = result;
 
         /* Before document is ready */
         if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions)|(DomainScriptsMappings))$/.test(href)) {
-            showMoreItemsPerPage();
+            settings.moreItems && showMoreItemsPerPage();
         }
         if (/CampaignBuilder.*CampaignLocations$/.test(href)) {
-            showMoreItemsPerPage('?Grid-page=1&Grid-orderBy=~&Grid-filter=~&GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50&Grid-size=50');
+            settings.moreItems && showMoreItemsPerPage('?Grid-page=1&Grid-orderBy=~&Grid-filter=~&GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50&Grid-size=50');
         }
 
         /* After document is ready */
         $(document).ready(function() {
             // login page
             if (/Auth.Login/.test(path)) {
-                autoLogin();
+                settings.autoLogin && autoLogin();
             }
             // content manager page
             if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
@@ -106,11 +104,11 @@
             }
             // add new action page
             if (/CampaignBuilder.*DomainActions.Add/.test(path)) {
-                addDescription();
+                settings.addDescription && addDescription();
             }
             // setie pages
             if (/CampaignBuilder.*DomainLocations$/.test(href)) {
-                !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
+                settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
             }
             // add new site page
             if (/CampaignBuilder.*DomainLocations.Add/.test(path)) {
@@ -120,7 +118,7 @@
                 // set page Order to 200 (10-200 - general pages, 200-700 - campaign specific pages, 700-1000 - fake pages)
                 $('#ProcessingOrder').val(200).attr('title', '-10 - Site utilities\n  10-200 - Common pages\n  200-700 - Campaign specific pages\n  700-1000 - Fake pages');
 
-                addDescription();
+                settings.addDescription && addDescription();
             }
             // action log page
             if (/Admin.*ActionLog/.test(path)) {
