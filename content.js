@@ -63,9 +63,7 @@
      */
     function showMoreItemsPerPage(params) {
         var numberOfItems = settings.numberOfItems || 50;
-        params = params
-            ? params.replace(/50/g, numberOfItems)
-            : '?Grid-page=1&Grid-orderBy=~&Grid-filter=~&Grid-size=' + numberOfItems;
+        params = (params || '?Grid-page=1&Grid-orderBy=~&Grid-filter=~&Grid-size=50').replace(/50/g, numberOfItems);
         location.assign(href + params);
     }
 
@@ -87,10 +85,6 @@
         // browser rules, site actions
         if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))$/.test(href)) {
             settings.moreItems && showMoreItemsPerPage();
-        }
-        // campaign pages
-        if (/CampaignBuilder.*CampaignLocations$/.test(href)) {
-            settings.moreItems && showMoreItemsPerPage('?Grid-page=1&Grid-orderBy=~&Grid-filter=~&GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50&Grid-size=50');
         }
         // content manager page
         if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
