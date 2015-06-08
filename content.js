@@ -1,5 +1,5 @@
 /**
- * content
+ * content.js
  * This script does all the changes in UI.
  *
  * @author Alex Kachura alex.kachura@maxymiser.com
@@ -78,16 +78,22 @@
 
     /* Run */
     chrome.storage.local.get([
-        'autoLogin', 'login', 'password', 'moreItems', 'numberOfItems', 'actionLogFilters', 'addDescription'
+        'autoLogin', 'login', 'password', 'moreItems', 'numberOfItems', 'addDescription', 'improveCM', 'filterActionLog', 'actionLogFilters'
     ], function(result) {
         settings = result;
 
         /* Before document is ready */
+        // browser rules, site actions, site mappings
         if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions)|(DomainScriptsMappings))$/.test(href)) {
             settings.moreItems && showMoreItemsPerPage();
         }
+        // campaign pages
         if (/CampaignBuilder.*CampaignLocations$/.test(href)) {
             settings.moreItems && showMoreItemsPerPage('?Grid-page=1&Grid-orderBy=~&Grid-filter=~&GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50&Grid-size=50');
+        }
+        // content manager page
+        if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
+            settings.improveCM && improveContentManager();
         }
 
         /* After document is ready */
@@ -95,10 +101,6 @@
             // login page
             if (/Auth.Login/.test(path)) {
                 settings.autoLogin && autoLogin();
-            }
-            // content manager page
-            if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
-                improveContentManager();
             }
             // add new action page
             if (/CampaignBuilder.*DomainActions.Add/.test(path)) {
@@ -123,15 +125,15 @@
                 if (settings.moreItems) {
                     $('#bRefresh, #bApply').click(showMoreItemsPerPageDOM);
                 }
-
-                if (settings.actionLogFilters) {
+                if (settings.filterActionLog) {
                     setTimeout(function() {
                         // set flags
-                        $('#VISITOR').click();
-                        $('#IP').click();
-                        $('#COUNTRY').click();
-                        $('#CAMPAIGN').click();
-                        $('#BROWSER').click();
+                        $.each($('#CheckBoxes').find('input'), function(id, checkbox) {
+                            id = $(checkbox).attr('id');
+                            if ($(checkbox).prop('checked') != !!(settings.actionLogFilters.indexOf(id) + 1)) {
+                                $($('#' + id)).click();
+                            }
+                        });
                         // apply flags
                         $('#bApply').click();
                     }, 600);
