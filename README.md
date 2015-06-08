@@ -8,6 +8,7 @@ Version: 1.0
 * Shows more items per page on pages like Action Log, Browser Rules, Site Pages/Actions
 * Sets Overlay when adding a new site page
 * Adds description
+* Adds campaign prefix when creating a new script or element
 * Improves Content Manager
 * Customizes pre-selected filters in Action Log
 

@@ -24,23 +24,26 @@
     }
 
     /**
+     * Adds campaign prefix to the name of script/element.
+     */
+    function addNamePrefix() {
+        var p = $('#main').find('.breadcrumb .mm-name span').text().replace(/(_| ).*/, ''),
+            e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name');
+        e.length && e.val(p + '_');
+        e.focus();
+    }
+
+    /**
      * If description field exists, adds current date and name of creator.
      * Format [dd.mm.yyyy by Name Surname]
      */
     function addDescription() {
-        var c = function(a) { return Array.prototype.slice.call(a) },
-            d = (new Date).toLocaleString('pl'),
-            f = $("#user_login").find("input.mm-dd-input:eq(0)").val(),
-            b = c(document.querySelectorAll("#Description, #description, #descr-textarea-id")),
-            e = [], v;
-        e = c(document.querySelectorAll("iframe"))
-            .filter(function(a) { return a.src.match(new RegExp("^" + location.protocol + "//" + document.domain.replace(/./g, "."))) || "" === a.src })
-            .map(function(a) {return a.contentDocument.querySelector("#Description, #description")})
-            .filter(function(a) {return null != a});
-        b = b.concat(e);
-        v = '[' + d.substring(0, d.indexOf(",")) + " by " + f + ']\n';
-        b.length && (b[0].value = b[0].value ? v + b[0].value : v);
-        b[0].focus();
+        var d = (new Date).toLocaleString('pl'),
+            f = $('#user_login').find('input.mm-dd-input:eq(0)').val(),
+            b = $('#Description, #description, #descr-textarea-id'),
+            v = d.substring(0, d.indexOf(',')) + ' by ' + f + '\n';
+        b.length && b.val(v);
+        b.focus();
     }
 
     /**
@@ -77,14 +80,12 @@
     }
 
     /* Run */
-    chrome.storage.local.get([
-        'autoLogin', 'login', 'password', 'moreItems', 'numberOfItems', 'addDescription', 'improveCM', 'filterActionLog', 'actionLogFilters'
-    ], function(result) {
+    chrome.storage.local.get(null, function(result) {
         settings = result;
 
         /* Before document is ready */
-        // browser rules, site actions, site mappings
-        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions)|(DomainScriptsMappings))$/.test(href)) {
+        // browser rules, site actions
+        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))$/.test(href)) {
             settings.moreItems && showMoreItemsPerPage();
         }
         // campaign pages
@@ -102,9 +103,13 @@
             if (/Auth.Login/.test(path)) {
                 settings.autoLogin && autoLogin();
             }
-            // add new action page
-            if (/CampaignBuilder.*DomainActions.Add/.test(path)) {
-                settings.addDescription && addDescription();
+            // add new action/element/script page
+            if (/CampaignBuilder.*((DomainActions.Add)|(CampaignContent.AddElement)|((Domain|Campaign)Scripts.Add))/.test(path)) {
+                settings.addDescription && setTimeout(addDescription, 600);
+            }
+            // add campaign prefix to element/script name
+            if (/CampaignBuilder.*((CampaignContent.AddElement)|(CampaignScripts.Add))/.test(path)) {
+                settings.addNamePrefix && setTimeout(addNamePrefix, 610);
             }
             // setie pages
             if (/CampaignBuilder.*DomainLocations$/.test(href)) {

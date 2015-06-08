@@ -11,6 +11,27 @@
     var $ = window.$;
 
     /**
+     * Removes all data saved in chrome storage.
+     */
+    function clearStorage() {
+        chrome.storage.local.get(null, function(items) {
+            $.each(items, function(k) { chrome.storage.local.remove(k); })
+        });
+    }
+
+    /**
+     * Prints to console whenever storage values change.
+     */
+    function listenToChanges() {
+        chrome.storage.onChanged.addListener(function(changes) {
+            for (key in changes) {
+                var storageChange = changes[key];
+                console.log('%s: %s => %s', key, storageChange.oldValue, storageChange.newValue);
+            }
+        });
+    }
+
+    /**
      * Saves settings from the popup to chrome storage.
      */
     function saveChanges() {
@@ -20,6 +41,7 @@
             login            = $('#settings-login').val(),
             password         = $('#settings-password').val(),
             addDescription   = $('#settings-addDescription').prop('checked'),
+            addNamePrefix    = $('#settings-addNamePrefix').prop('checked'),
             improveCM        = $('#settings-improveCM').prop('checked'),
             moreItems        = $('#settings-moreItems').prop('checked'),
             numberOfItems    = $numberOfItems.val(),
@@ -46,6 +68,7 @@
             password:         password,
             autoLogin:        autoLogin,
             addDescription:   addDescription,
+            addNamePrefix:    addNamePrefix,
             improveCM:        improveCM,
             moreItems:        moreItems,
             numberOfItems:    numberOfItems,
@@ -63,31 +86,26 @@
      */
     function syncView(settings) {
         $('#settings-autoLogin').prop('checked', settings.autoLogin);
-        $("#settings-login").val(settings.login || '');
-        $("#settings-password").val(settings.password || '');
+        $("#settings-login").val(settings.login);
+        $("#settings-password").val(settings.password);
         $('#settings-moreItems').prop('checked', settings.moreItems);
         $('#settings-numberOfItems').val(settings.numberOfItems || 50);
         $('#settings-addDescription').prop('checked', settings.addDescription);
+        $('#settings-addNamePrefix').prop('checked', settings.addNamePrefix);
         $('#settings-improveCM').prop('checked', settings.improveCM);
         $('#settings-filterActionLog').prop('checked', settings.filterActionLog);
         $.each(settings.actionLogFilters, function(i, id) { $($('#' + id).prop('checked', true)); });
     }
 
     // retrieve settings from chrome storage and show it to user
-    chrome.storage.local.get([
-        'autoLogin', 'login', 'password', 'moreItems', 'numberOfItems', 'addDescription', 'improveCM', 'filterActionLog', 'actionLogFilters'
-    ], function(settings) {
+    chrome.storage.local.get(null, function(settings) {
+        console.log(settings);
         $(document).ready(function() {
-            syncView(settings);
+            settings && syncView(settings);
             $('.settings-save').click(saveChanges);
         });
     });
 
-    // print to console whenever storage values change
-    chrome.storage.onChanged.addListener(function(changes) {
-        for (key in changes) {
-            var storageChange = changes[key];
-            console.log('%s: %s => %s', key, storageChange.oldValue, storageChange.newValue);
-        }
-    });
+    //listenToChanges();
+    //clearStorage();
 })();
