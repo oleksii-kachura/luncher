@@ -1,7 +1,7 @@
 # UI-Fixer
 Chrome extension that lets you customize a few things in [Maxymiser UI](https://ui61.maxymiser.com/).
 
-Version: 1.0
+Version: 1.1
 
 ### Features
 * Automatically logs you in
