@@ -14,8 +14,8 @@
      * Removes all data saved in chrome storage.
      */
     function clearStorage() {
-        chrome.storage.local.get(null, function(items) {
-            $.each(items, function(k) { chrome.storage.local.remove(k); })
+        chrome.storage.local.get(null, function(settings) {
+            $.each(settings, function(k) { chrome.storage.local.remove(k); })
         });
     }
 
@@ -101,7 +101,7 @@
     chrome.storage.local.get(null, function(settings) {
         console.log(settings);
         $(document).ready(function() {
-            settings && syncView(settings);
+            !$.isEmptyObject(settings) && syncView(settings);
             $('.settings-save').click(saveChanges);
         });
     });
