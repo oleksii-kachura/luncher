@@ -5,7 +5,7 @@
  * @param tab
  */
 function checkForValidUrl(tabId, changeInfo, tab) {
-    if (tab.url.indexOf('ui61.maxymiser.com') + 1) {
+    if (/(ui61.*.maxymiser.com)|(demo.maxymiser.org)/.test(tab.url)) {
         chrome.pageAction.show(tabId);
     }
 }

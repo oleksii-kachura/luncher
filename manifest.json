@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "UI fixer",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Lets you customize a few things in Maxymiser UI",
 
   "permissions": ["tabs", "storage"],
@@ -16,7 +16,7 @@
 
   "content_scripts": [
     {
-      "matches": ["*://ui61.maxymiser.com/*"],
+      "matches": ["*://ui61.maxymiser.com/*", "*://ui61us.maxymiser.com/*", "*://demo.maxymiser.org/*"],
       "js":      ["jquery.js", "content.js"],
       "run_at":  "document_start"
     }
