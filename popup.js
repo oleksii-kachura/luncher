@@ -99,7 +99,6 @@
 
     // retrieve settings from chrome storage and show it to user
     chrome.storage.local.get(null, function(settings) {
-        console.log(settings);
         $(document).ready(function() {
             !$.isEmptyObject(settings) && syncView(settings);
             $('.settings-save').click(saveChanges);
