@@ -1,90 +1,93 @@
 <link rel="stylesheet" href="styles.css"/>
 <script src="jquery.js"></script>
 
-<div>
-    <button class="settings-save">Save</button>
-    <span class="settings-notification">Settings saved!</span>
+<div class="wrapper">
+    <div>
+        <button class="settings-save right">Save</button>
+        <span class="notification right">Settings saved!</span>
+    </div>
+
+    <section>
+        <input id="settings-autoLogin" type="checkbox"/>
+        <label for="settings-autoLogin">Autologin</label>
+        <input id="settings-login" type="email" placeholder="Login"/>
+        <input id="settings-password" type="password" placeholder="Password"/>
+    </section>
+
+    <section>
+        <input id="settings-moreItems" type="checkbox"/>
+        <label for="settings-moreItems" title="More than 20 and less than 300">Show more items per page</label>
+        <input id="settings-numberOfItems" type="number" placeholder="How many?"/>
+    </section>
+
+    <section>
+        <input id="settings-addDescription" type="checkbox"/>
+        <label for="settings-addDescription">Add date and author in description</label>
+    </section>
+
+    <section>
+        <input id="settings-addNamePrefix" type="checkbox"/>
+        <label for="settings-addNamePrefix">Add campaign prefix to script/element name</label>
+    </section>
+
+    <section>
+        <input id="settings-improveCM" type="checkbox"/>
+        <label for="settings-improveCM">Improve Content Manager</label>
+    </section>
+
+    <section>
+        <input id="settings-filterActionLog" type="checkbox"/>
+        <label for="settings-filterActionLog" title="Default: Date, Campaign, Actions, Browser">Change default action log filters</label>
+        <ul id="settings-actionLogFiltersList">
+            <li><label><input type="checkbox" id="DATE">Date</label>
+            <li><label><input type="checkbox" id="HIT">Hit</label>
+            <li><label><input type="checkbox" id="VISITOR">Visitor</label>
+            <li><label><input type="checkbox" id="IP">IP</label>
+            <li><label><input type="checkbox" id="CITY">City</label>
+            <li><label><input type="checkbox" id="COUNTRY">Country</label>
+            <li><label><input type="checkbox" id="PAGE">Page</label>
+            <li><label><input type="checkbox" id="CAMPAIGN">Campaign</label>
+
+            <li><label><input type="checkbox" id="CAMPAIGN_VERSION">Version</label>
+            <li><label><input type="checkbox" id="ISGENERATION">Is Generation</label>
+            <li><label><input type="checkbox" id="ISCONTENTPAGE">Is Content Page</label>
+            <li><label><input type="checkbox" id="CONTENT">Content</label>
+            <li><label><input type="checkbox" id="ACTIONS">Actions</label>
+            <li><label><input type="checkbox" id="CRITERIA">Criteria</label>
+            <li><label><input type="checkbox" id="SEGMENTS">Segments</label>
+            <li><label><input type="checkbox" id="COOKIES">Cookies</label>
+
+            <li><label><input type="checkbox" id="REFERRER">Referrer</label>
+            <li><label><input type="checkbox" id="SERVER">Server</label>
+            <li><label><input type="checkbox" id="AGENT">Agent</label>
+            <li><label><input type="checkbox" id="BROWSER">Browser</label>
+            <li><label><input type="checkbox" id="OS">OS</label>
+            <li><label><input type="checkbox" id="DEVICETYPE">Device Type</label>
+            <li><label><input type="checkbox" id="SITELOCATION">Site Pages</label>
+            <li><label><input type="checkbox" id="GENERATIONMETHOD">Generation Method</label>
+
+            <li><label><input type="checkbox" id="EXTERNAL_ID1">Visitor ID 1</label>
+            <li><label><input type="checkbox" id="EXTERNAL_ID2">Visitor ID 2</label>
+            <li><label><input type="checkbox" id="EXTERNAL_ID3">Visitor ID 3</label>
+            <li><label><input type="checkbox" id="EXTERNAL_ID4">Visitor ID 4</label>
+            <li><label><input type="checkbox" id="EXTERNAL_ID5">Visitor ID 5</label>
+            <li><label><input type="checkbox" id="WEATHER_CONDITIONS">Weather condition</label>
+            <li><label><input type="checkbox" id="WEATHER_TEMPERATURE_RANGE">Temperature range</label>
+            <li><label><input type="checkbox" id="SEARCH_ENGINE">Search Engine</label>
+
+            <li><label><input type="checkbox" id="REFERRER_DOMAIN">Session Referrer</label>
+            <li><label><input type="checkbox" id="SEARCH_PHRASE">Search Phrase</label>
+            <li><label><input type="checkbox" id="SOCIAL_NETWORK">Social Network</label>
+            <li><label><input type="checkbox" id="TRAFFIC_SOURCE_TYPE">Traffic Source Type</label>
+            <li><label><input type="checkbox" id="TARGETED_GROUP">Targeted group</label>
+        </ul>
+    </section>
+
+    <section>
+        <button class="settings-save">Save</button>
+        <span class="notification">Settings saved!</span>
+        <button class="settings-reset right" title="Reset to defaults">Reset</button>
+    </section>
 </div>
-
-<section>
-    <input id="settings-autoLogin" type="checkbox"/>
-    <label for="settings-autoLogin">Autologin</label>
-    <input id="settings-login" type="email" placeholder="Login"/>
-    <input id="settings-password" type="password" placeholder="Password"/>
-</section>
-
-<section>
-    <input id="settings-moreItems" type="checkbox"/>
-    <label for="settings-moreItems" title="More than 20 and less than 500">Show more items per page</label>
-    <input id="settings-numberOfItems" type="number" placeholder="How many?"/>
-</section>
-
-<section>
-    <input id="settings-addDescription" type="checkbox"/>
-    <label for="settings-addDescription">Add date and author in description</label>
-</section>
-
-<section>
-    <input id="settings-addNamePrefix" type="checkbox"/>
-    <label for="settings-addNamePrefix">Add campaign prefix to script/element name</label>
-</section>
-
-<section>
-    <input id="settings-improveCM" type="checkbox"/>
-    <label for="settings-improveCM">Improve Content Manager</label>
-</section>
-
-<section>
-    <input id="settings-filterActionLog" type="checkbox"/>
-    <label for="settings-filterActionLog" title="Default: Date, Campaign, Actions, Browser">Change default action log filters</label>
-    <ul id="settings-actionLogFiltersList">
-        <li><label><input type="checkbox" id="DATE">Date</label>
-        <li><label><input type="checkbox" id="HIT">Hit</label>
-        <li><label><input type="checkbox" id="VISITOR">Visitor</label>
-        <li><label><input type="checkbox" id="IP">IP</label>
-        <li><label><input type="checkbox" id="CITY">City</label>
-        <li><label><input type="checkbox" id="COUNTRY">Country</label>
-        <li><label><input type="checkbox" id="PAGE">Page</label>
-        <li><label><input type="checkbox" id="CAMPAIGN">Campaign</label>
-
-        <li><label><input type="checkbox" id="CAMPAIGN_VERSION">Version</label>
-        <li><label><input type="checkbox" id="ISGENERATION">Is Generation</label>
-        <li><label><input type="checkbox" id="ISCONTENTPAGE">Is Content Page</label>
-        <li><label><input type="checkbox" id="CONTENT">Content</label>
-        <li><label><input type="checkbox" id="ACTIONS">Actions</label>
-        <li><label><input type="checkbox" id="CRITERIA">Criteria</label>
-        <li><label><input type="checkbox" id="SEGMENTS">Segments</label>
-        <li><label><input type="checkbox" id="COOKIES">Cookies</label>
-
-        <li><label><input type="checkbox" id="REFERRER">Referrer</label>
-        <li><label><input type="checkbox" id="SERVER">Server</label>
-        <li><label><input type="checkbox" id="AGENT">Agent</label>
-        <li><label><input type="checkbox" id="BROWSER">Browser</label>
-        <li><label><input type="checkbox" id="OS">OS</label>
-        <li><label><input type="checkbox" id="DEVICETYPE">Device Type</label>
-        <li><label><input type="checkbox" id="SITELOCATION">Site Pages</label>
-        <li><label><input type="checkbox" id="GENERATIONMETHOD">Generation Method</label>
-
-        <li><label><input type="checkbox" id="EXTERNAL_ID1">Visitor ID 1</label>
-        <li><label><input type="checkbox" id="EXTERNAL_ID2">Visitor ID 2</label>
-        <li><label><input type="checkbox" id="EXTERNAL_ID3">Visitor ID 3</label>
-        <li><label><input type="checkbox" id="EXTERNAL_ID4">Visitor ID 4</label>
-        <li><label><input type="checkbox" id="EXTERNAL_ID5">Visitor ID 5</label>
-        <li><label><input type="checkbox" id="WEATHER_CONDITIONS">Weather condition</label>
-        <li><label><input type="checkbox" id="WEATHER_TEMPERATURE_RANGE">Temperature range</label>
-        <li><label><input type="checkbox" id="SEARCH_ENGINE">Search Engine</label>
-
-        <li><label><input type="checkbox" id="REFERRER_DOMAIN">Session Referrer</label>
-        <li><label><input type="checkbox" id="SEARCH_PHRASE">Search Phrase</label>
-        <li><label><input type="checkbox" id="SOCIAL_NETWORK">Social Network</label>
-        <li><label><input type="checkbox" id="TRAFFIC_SOURCE_TYPE">Traffic Source Type</label>
-        <li><label><input type="checkbox" id="TARGETED_GROUP">Targeted group</label>
-    </ul>
-</section>
-
-<section>
-    <button class="settings-save">Save</button>
-    <span class="settings-notification">Settings saved!</span>
-</section>
 
 <script type="text/javascript" src="popup.js"></script>

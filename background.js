@@ -1,12 +1,8 @@
 /**
- * Shows extension icon in the address bar while browsing Maxymiser UI site
- * @param tabId
- * @param changeInfo
- * @param tab
+ * Shows extension icon in the address bar.
+ * @param tabId - ID of the current tab.
  */
-function checkForValidUrl(tabId, changeInfo, tab) {
-    if (/(ui61.*.maxymiser.com)|(demo.maxymiser.org)/.test(tab.url)) {
-        chrome.pageAction.show(tabId);
-    }
+function showExtensionIcon(tabId) {
+    chrome.pageAction.show(tabId);
 }
-chrome.tabs.onUpdated.addListener(checkForValidUrl);
+chrome.tabs.onUpdated.addListener(showExtensionIcon);

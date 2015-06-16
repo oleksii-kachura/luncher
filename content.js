@@ -151,13 +151,13 @@
                         // set flags
                         $.each($('#CheckBoxes').find('input'), function(id, checkbox) {
                             id = $(checkbox).attr('id');
-                            if ($(checkbox).prop('checked') != !!(settings.actionLogFilters.indexOf(id) + 1)) {
+                            if ($(checkbox).prop('checked') != !!(settings.actionLogFiltersList.indexOf(id) + 1)) {
                                 $($('#' + id)).click();
                             }
                         });
                         // apply flags
                         $('#bApply').click();
-                    }, 700);
+                    }, 600);
                 }
             }
         });

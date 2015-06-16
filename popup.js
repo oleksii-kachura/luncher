@@ -8,7 +8,29 @@
 
 ;
 (function() {
-    var $ = window.$;
+    var $, defaultSettings, settingsSaved;
+
+    $               = window.$;
+    defaultSettings = {
+        autoLogin:            false,
+        login:                '@maxymiser.com',
+        password:             '',
+        moreItems:            true,
+        numberOfItems:        50,
+        addDescription:       true,
+        addNamePrefix:        true,
+        improveCM:            true,
+        filterActionLog:      false,
+        actionLogFiltersList: ['DATE', 'CAMPAIGN', 'ACTIONS', 'BROWSER']
+    };
+
+    /**
+     * Updates chrome storage.
+     * @param {object} settings - Can be up to 512 properties.
+     */
+    function updateStorage(settings) {
+        chrome.storage.sync.set(settings);
+    }
 
     /**
      * Removes all data saved in chrome storage.
@@ -35,76 +57,96 @@
      * Saves settings from the popup to chrome storage.
      */
     function saveChanges() {
-        var $notification    = $('.settings-notification'),
-            $numberOfItems   = $('#settings-numberOfItems'),
-            autoLogin        = $('#settings-autoLogin').prop('checked'),
-            login            = $('#settings-login').val(),
-            password         = $('#settings-password').val(),
-            addDescription   = $('#settings-addDescription').prop('checked'),
-            addNamePrefix    = $('#settings-addNamePrefix').prop('checked'),
-            improveCM        = $('#settings-improveCM').prop('checked'),
-            moreItems        = $('#settings-moreItems').prop('checked'),
-            numberOfItems    = $numberOfItems.val(),
-            filterActionLog  = $('#settings-filterActionLog').prop('checked'),
-            actionLogFilters = [];
+        var $element, $notification, settings;
+
+        $notification = $('.notification');
+        settings      = {};
+
+        $.each(defaultSettings, function(key, value) {
+            $element = $('#settings-' + key);
+            if ($element.length) {
+                settings[key] = typeof value === 'boolean'
+                    ? $element.prop('checked')
+                    : $element.val()
+            } else {
+                settings[key] = value;
+            }
+        });
 
         // validation
-        if (numberOfItems <= 20 || numberOfItems > 500) {
-            numberOfItems = 50;
-            $numberOfItems.val(numberOfItems);
+        if (settings.numberOfItems <= 20 || settings.numberOfItems > 300) {
+            settings.numberOfItems = 50;
         }
-        if (filterActionLog) {
+        if (settings.filterActionLog) {
+            settings.actionLogFiltersList = [];
             $.each($('#settings-actionLogFiltersList').find('input'), function(i, checkbox) {
-                $(checkbox).prop('checked') && actionLogFilters.push($(checkbox).attr('id'));
+                $(checkbox).prop('checked') && settings.actionLogFiltersList.push($(checkbox).attr('id'));
             });
-        } else {
-            // set default values
-            actionLogFilters = ['DATE', 'CAMPAIGN', 'ACTIONS', 'BROWSER'];
         }
 
-        // save settings to chrome storage
-        chrome.storage.sync.set({
-            login:            login,
-            password:         password,
-            autoLogin:        autoLogin,
-            addDescription:   addDescription,
-            addNamePrefix:    addNamePrefix,
-            improveCM:        improveCM,
-            moreItems:        moreItems,
-            numberOfItems:    numberOfItems,
-            filterActionLog:  filterActionLog,
-            actionLogFilters: actionLogFilters
-        });
+        updateStorage(settings);
+        updateView(settings);
+
+        settingsSaved = true;
 
         // representation
         $notification.fadeIn(100);
         $('.settings-save').on('blur', function() { $notification.fadeOut(); });
     }
 
-    /**
-     * Synchronizes view of the popup with the current state of settings in chrome storage.
-     */
-    function syncView(settings) {
-        $('#settings-autoLogin').prop('checked', settings.autoLogin);
-        $("#settings-login").val(settings.login);
-        $("#settings-password").val(settings.password);
-        $('#settings-moreItems').prop('checked', settings.moreItems);
-        $('#settings-numberOfItems').val(settings.numberOfItems || 50);
-        $('#settings-addDescription').prop('checked', settings.addDescription);
-        $('#settings-addNamePrefix').prop('checked', settings.addNamePrefix);
-        $('#settings-improveCM').prop('checked', settings.improveCM);
-        $('#settings-filterActionLog').prop('checked', settings.filterActionLog);
-        $.each(settings.actionLogFilters, function(i, id) { $($('#' + id).prop('checked', true)); });
+    function resetChanges() {
+        updateStorage(defaultSettings);
+        updateView(defaultSettings);
     }
 
-    // retrieve settings from chrome storage and show it to user
-    chrome.storage.sync.get(null, function(settings) {
-        $(document).ready(function() {
-            !$.isEmptyObject(settings) && syncView(settings);
-            $('.settings-save').click(saveChanges);
-        });
-    });
+    function adjustPopupHeight() {
+        var popupHeight = $('.wrapper').height();
+        $('html').height(popupHeight);
+        $('body').height(popupHeight);
+    }
 
-    //listenToChanges();
-    //clearStorage();
+    /**
+     * Synchronizes view of the popup with the current state of settings in chrome storage.
+     * @param {object} settings - Stored settings.
+     */
+    function updateView(settings) {
+        var $element;
+        $.each(settings, function(key, value) {
+            $element = $('#settings-' + key);
+            if ($element.length) {
+                typeof value === 'boolean'
+                    ? $element.prop('checked', value)
+                    : $element.val(value)
+            }
+        });
+        $.each(settings.actionLogFiltersList, function(k, id) {
+            $('#' + id).prop('checked', true);
+        });
+    }
+
+    /* Run */
+    // retrieve settings from chrome storage and show it to user
+    chrome.storage.sync.get(null, function(settings) { $(document).ready(function() {
+        if ($.isEmptyObject(settings)) {
+            updateStorage(defaultSettings);
+            settings = defaultSettings;
+        }
+        updateView(settings);
+
+        if (settings.password === '') {
+            $('#settings-password')
+                .mouseover(function() {
+                    !settingsSaved && (this.type = "text");
+                })
+                .mouseout(function() {
+                    this.type = "password";
+                });
+        }
+        $('.settings-save').click(saveChanges);
+        $('.settings-reset').click(resetChanges);
+
+        //representation
+        adjustPopupHeight();
+        $('#settings-filterActionLog, .settings-reset').click(adjustPopupHeight);
+    }); });
 })();
