@@ -10,8 +10,25 @@
     <section>
         <input id="settings-autoLogin" type="checkbox"/>
         <label for="settings-autoLogin">Autologin</label>
-        <input id="settings-login" type="email" placeholder="Login"/>
-        <input id="settings-password" type="password" placeholder="Password"/>
+        <div>
+            <input id="settings-sameForAll" type="checkbox"/>
+            <label for="settings-sameForAll">Same for all environments</label>
+            <div>
+                <div>UI61:</div>
+                <input id="settings-login" type="email" placeholder="Login"/>
+                <input id="settings-password" type="password" placeholder="Password"/>
+            </div>
+            <div>
+                <div>UI61US:</div>
+                <input id="settings-loginUS" type="email" placeholder="Login"/>
+                <input id="settings-passwordUS" type="password" placeholder="Password"/>
+            </div>
+            <div>
+                <div>DEMO:</div>
+                <input id="settings-loginDemo" type="email" placeholder="Login"/>
+                <input id="settings-passwordDemo" type="password" placeholder="Password"/>
+            </div>
+        </div>
     </section>
 
     <section>

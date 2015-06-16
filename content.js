@@ -11,7 +11,19 @@
     var $        = window.$,
         path     = location.pathname,
         href     = location.href,
+        host     = location.host,
         settings = {};
+
+    /**
+     * Detects current environment.
+     * @returns {string} - Empty string | 'US' | 'Demo'
+     */
+    function detectEnvironment() {
+        var env = '';
+        if (/us/.test(host)) { env = 'US'; }
+        if (/demo/.test(host)) { env = 'Demo'; }
+        return env;
+    }
 
     /**
      * Improves Content Manager.
@@ -68,9 +80,10 @@
      * Automatically logs you in with credentials specified in settings.
      */
     function autoLogin() {
-        if (settings.login && settings.password && !$('.auth-top-messages').text().replace(/\s/g, '').length) {
-            $("#Login").val(settings.login);
-            $("#Password").val(settings.password);
+        var env = detectEnvironment();
+        if (settings['login' + env] && settings['password' + env] && !$('.auth-top-messages').text().replace(/\s/g, '').length) {
+            $("#Login").val(settings['login' + env]);
+            $("#Password").val(settings['password' + env]);
             $('#Login[type=submit]').click();
         }
     }

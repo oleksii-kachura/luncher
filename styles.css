@@ -7,10 +7,16 @@ ul { list-style: none; padding: 0; }
 
 section { clear: both; }
 section + section { margin-top: 10px; }
-section input[type="checkbox"] { vertical-align: text-top; }
+section input[type="checkbox"] { margin-left: 0; vertical-align: text-top; }
 
 section > input:first-child + label ~ * { display: none; }
 section > input:first-child:checked + label ~ * { display: block; margin: 5px 0 0 20px; width: 250px; }
+
+section > div > div * { display: block; margin: 5px 0 0 0; width: 250px; }
+
+section > div > input:first-child:checked + label ~ div:nth-last-child(3) > div,
+section > div > input:first-child:checked + label ~ div:last-child,
+section > div > input:first-child:checked + label ~ div:nth-last-child(2) { display: none; }
 
 .notification { display: none; margin-left: 5px; color: #00C665; }
 div > .notification { margin-right: 5px; }

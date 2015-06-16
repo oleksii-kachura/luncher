@@ -8,13 +8,18 @@
 
 ;
 (function() {
-    var $, defaultSettings, settingsSaved;
+    var $, defaultSettings;
 
     $               = window.$;
     defaultSettings = {
         autoLogin:            false,
+        sameForAll:           true,
         login:                '@maxymiser.com',
         password:             '',
+        loginUS:              '@maxymiser.com',
+        passwordUS:           '',
+        loginDemo:            '@maxymiser.com',
+        passwordDemo:         '',
         moreItems:            true,
         numberOfItems:        50,
         addDescription:       true,
@@ -87,8 +92,6 @@
         updateStorage(settings);
         updateView(settings);
 
-        settingsSaved = true;
-
         // representation
         $notification.fadeIn(100);
         $('.settings-save').on('blur', function() { $notification.fadeOut(); });
@@ -133,20 +136,14 @@
         }
         updateView(settings);
 
-        if (settings.password === '') {
-            $('#settings-password')
-                .mouseover(function() {
-                    !settingsSaved && (this.type = "text");
-                })
-                .mouseout(function() {
-                    this.type = "password";
-                });
-        }
         $('.settings-save').click(saveChanges);
         $('.settings-reset').click(resetChanges);
 
         //representation
         adjustPopupHeight();
-        $('#settings-filterActionLog, .settings-reset').click(adjustPopupHeight);
+        $('input[type=checkbox], .settings-reset').click(adjustPopupHeight);
+        $('input[type=password]')
+            .mouseover(function() { !this.value && (this.type = "text"); })
+            .mouseout(function() { this.type = "password"; });
     }); });
 })();
