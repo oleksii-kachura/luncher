@@ -72,11 +72,11 @@
         setTimeout(function() {
             $('#Grid, #GridLocations, #grid').find('.t-dropdown-wrap.t-state-default, .k-dropdown-wrap.k-state-default').click();
             $('.t-animation-container .t-item:contains(50), .k-animation-container .k-item:contains(50)').click();
-        }, 500);
+        }, 600);
     }
 
     /* Run */
-    chrome.storage.local.get(null, function(result) {
+    chrome.storage.sync.get(null, function(result) {
         settings = result;
 
         /* Before document is ready */
@@ -93,11 +93,11 @@
             }
             // add new action/element/script page
             if (/CampaignBuilder.*((DomainActions.Add)|(CampaignContent.AddElement)|((Domain|Campaign)Scripts.Add))/.test(path)) {
-                settings.addDescription && setTimeout(addDescription, 600);
+                settings.addDescription && setTimeout(addDescription, 700);
             }
             // add campaign prefix to element/script name
             if (/CampaignBuilder.*((CampaignContent.AddElement)|(CampaignScripts.Add))/.test(path)) {
-                settings.addNamePrefix && setTimeout(addNamePrefix, 610);
+                settings.addNamePrefix && setTimeout(addNamePrefix, 710);
             }
             // setie pages
             if (/CampaignBuilder.*DomainLocations$/.test(href)) {
@@ -133,7 +133,7 @@
                         });
                         // apply flags
                         $('#bApply').click();
-                    }, 600);
+                    }, 700);
                 }
             }
         });

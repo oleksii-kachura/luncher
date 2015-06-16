@@ -14,8 +14,8 @@
      * Removes all data saved in chrome storage.
      */
     function clearStorage() {
-        chrome.storage.local.get(null, function(settings) {
-            $.each(settings, function(k) { chrome.storage.local.remove(k); })
+        chrome.storage.sync.get(null, function(settings) {
+            $.each(settings, function(k) { chrome.storage.sync.remove(k); })
         });
     }
 
@@ -63,7 +63,7 @@
         }
 
         // save settings to chrome storage
-        chrome.storage.local.set({
+        chrome.storage.sync.set({
             login:            login,
             password:         password,
             autoLogin:        autoLogin,
@@ -98,7 +98,7 @@
     }
 
     // retrieve settings from chrome storage and show it to user
-    chrome.storage.local.get(null, function(settings) {
+    chrome.storage.sync.get(null, function(settings) {
         $(document).ready(function() {
             !$.isEmptyObject(settings) && syncView(settings);
             $('.settings-save').click(saveChanges);
