@@ -1,11 +1,15 @@
 # UI-Fixer
-[Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in [Maxymiser UI](https://ui61.maxymiser.com/).
+[Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in Maxymiser UI.
+
+[EMEA UI](https://ui61.maxymiser.com/)
+[US UI](https://ui61us.maxymiser.com/)
+[Demo UI](https://demo.maxymiser.org/)
 
 Version: 1.11
 
 ### Features
 * Automatically logs you in
-* Shows more items per page on pages like Action Log, Browser Rules, Site Pages/Actions (up to 300)
+* Shows more items per page on pages like Browser Rules, Site Pages/Actions (up to 300) and Action Log (50)
 * Sets Overlay when adding a new site page
 * Improves Content Manager
 * Customizes pre-selected filters in Action Log
