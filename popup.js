@@ -13,7 +13,7 @@
     $               = window.$;
     defaultSettings = {
         autoLogin:            false,
-        sameForAll:           true,
+        sameForAll:           false,
         login:                '@maxymiser.com',
         password:             '',
         loginUS:              '@maxymiser.com',
