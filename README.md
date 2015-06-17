@@ -5,7 +5,7 @@ Version: 1.11
 
 ### Features
 * Automatically logs you in
-* Shows more items per page on pages like Action Log, Browser Rules, Site Pages/Actions
+* Shows more items per page on pages like Action Log, Browser Rules, Site Pages/Actions (up to 300)
 * Sets Overlay when adding a new site page
 * Improves Content Manager
 * Customizes pre-selected filters in Action Log
@@ -15,4 +15,6 @@ Version: 1.11
 * Replaces spinner gif to have transparent background
 * When creating a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 
-Feel free to [tell me](mailto:alex.kachura@maxymiser.com) if you need sth else
+Feel free to tell me if you need sth else
+
+<alex.kachura@maxymiser.com>
