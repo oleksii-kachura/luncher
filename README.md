@@ -1,10 +1,6 @@
 # UI-Fixer
 [Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in Maxymiser UI.
 
-[EMEA UI](https://ui61.maxymiser.com/)
-[US UI](https://ui61us.maxymiser.com/)
-[Demo UI](https://demo.maxymiser.org/)
-
 Version: 1.11
 
 ### Features
@@ -18,6 +14,8 @@ Version: 1.11
 * On Campaign Actions lets you go directly to Edit Action page when you click 'details' link
 * Replaces spinner gif to have transparent background
 * When creating a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
+
+Links:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[EMEA UI](https://ui61.maxymiser.com/)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[US UI](https://ui61us.maxymiser.com/)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Demo UI](https://demo.maxymiser.org/)
 
 Feel free to tell me if you need sth else
 
