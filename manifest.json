@@ -1,22 +1,24 @@
 {
   "manifest_version": 2,
   "name": "UI fixer",
-  "version": "1.9",
+  "version": "1.10",
   "description": "Customize your Maxymiser UI experience",
 
   "permissions": ["tabs", "storage"],
 
-  "icons": {"16": "icon16.png", "48": "icon48.png", "128": "icon128.png"},
+  "icons": {"16": "img/icon16.png", "48": "img/icon48.png", "128": "img/icon128.png"},
 
   "page_action": {
-    "default_icon":  {"19": "icon19.png", "38": "icon38.png"},
+    "default_icon":  {"19": "img/icon19.png", "38": "img/icon38.png"},
     "default_title": "UI fixer",
     "default_popup": "popup.html"
   },
+  "web_accessible_resources": ["img/spinner.gif"],
 
   "content_scripts": [
     {
       "matches": ["*://ui61.maxymiser.com/*", "*://ui61us.maxymiser.com/*", "*://demo.maxymiser.org/*"],
+      "css":     ["overrides.css"],
       "js":      ["jquery.js", "content.js"],
       "run_at":  "document_start"
     }

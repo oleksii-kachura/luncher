@@ -8,11 +8,11 @@
 
 ;
 (function() {
-    var $        = window.$,
-        path     = location.pathname,
-        href     = location.href,
-        host     = location.host,
-        settings = {};
+    var $          = window.$,
+        path       = location.pathname,
+        href       = location.href,
+        host       = location.host,
+        settings   = {};
 
     /**
      * Detects current environment.
@@ -108,6 +108,17 @@
         }, 600);
     }
 
+    /**
+     * Replaces default spinner image to have transparent background.
+     */
+    function replaceSpinner() {
+        var spinnerURL = chrome.extension.getURL('img/spinner.gif'),
+            $spinner = $('#spinner');
+        if ($spinner.length) {
+            $spinner.attr('src', spinnerURL).css({opacity: 1});
+        }
+    }
+
     /* Run */
     chrome.storage.sync.get(null, function(result) {
         settings = result;
@@ -120,6 +131,8 @@
 
         /* After document is ready */
         $(document).ready(function() {
+            // common
+            replaceSpinner();
             // login page
             if (/Auth.Login/.test(path)) {
                 settings.autoLogin && autoLogin();
