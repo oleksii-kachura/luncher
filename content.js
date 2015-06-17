@@ -61,6 +61,17 @@
     }
 
     /**
+     * Makes action 'details' link omit Action Details page and go directly to Edit Action Page.
+     */
+    function omitActionDetails() {
+        var href;
+        $('.mm-details').each(function(k, link) {
+            href = $(link).attr('href').replace(/campaign.+Details/, 'DomainActions/Edit');
+            $(link).attr('href', href);
+        });
+    }
+
+    /**
      * Adds some dummy code to script field in order to prevent validation error when you save script with blank body.
      */
     function addDummyScriptBody(code) {
@@ -153,6 +164,10 @@
             if (/CampaignBuilder.*DomainLocations$/.test(href)) {
                 settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
             }
+            // campaign actions page
+            if (/CampaignBuilder.*CampaignGoals/.test(path)) {
+                settings.omitActionDetails && omitActionDetails();
+            }
             // content manager page
             if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
                 settings.improveCM && improveContentManager();
@@ -183,7 +198,7 @@
                         });
                         // apply flags
                         $('#bApply').click();
-                    }, 600);
+                    }, 700);
                 }
             }
         });
