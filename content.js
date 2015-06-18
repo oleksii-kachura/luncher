@@ -65,7 +65,7 @@
      */
     function omitActionDetails() {
         var href;
-        $('.mm-details').each(function(k, link) {
+        $('.mm-CampaignActions .dashbrd-lnk-std, .mm-details').each(function(k, link) {
             href = $(link).attr('href').replace(/campaign.+Details/, 'DomainActions/Edit');
             $(link).attr('href', href);
         });
@@ -164,8 +164,8 @@
             if (/CampaignBuilder.*DomainLocations$/.test(href)) {
                 settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
             }
-            // campaign actions page
-            if (/CampaignBuilder.*CampaignGoals/.test(path)) {
+            // campaign settings/actions page
+            if (/CampaignBuilder.*Campaign(Settings|Goals)/.test(path)) {
                 settings.omitActionDetails && omitActionDetails();
             }
             // content manager page
