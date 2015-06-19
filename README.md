@@ -12,6 +12,7 @@ Version: 1.12
 * Adds campaign prefix when creating a new script or element
 * Adds current date and author in description
 * On Campaign Actions and Campaign Settings lets you go directly to Edit Action page when you click 'details' link
+* If there are no scripts on Campaign Scripts page adds a new script
 * Replaces spinner gif to have transparent background
 * When creating a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 

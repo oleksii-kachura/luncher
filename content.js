@@ -51,10 +51,11 @@
      */
     function addDescription() {
         setTimeout(function() {
-            var d = (new Date).toLocaleString('pl'),
-                f = $('#user_login').find('input.mm-dd-input:eq(0)').val(),
-                b = $('#Description, #description, #descr-textarea-id'),
-                v = d.substring(0, d.indexOf(',')) + ' by ' + f + '\n';
+            var d, f, b, v;
+            d = (new Date).toLocaleString('pl');
+            f = $('#user_login').find('input.mm-dd-input:eq(0)').val();
+            b = $('#Description, #description, #descr-textarea-id');
+            v = d.substring(0, d.indexOf(',')) + ' by ' + f + '\n';
             b.length && b.val(v);
             b.focus();
         }, 850);
@@ -159,6 +160,13 @@
             // add campaign element/script page
             if (/CampaignBuilder.*((CampaignContent.AddElement)|(CampaignScripts.Add))/.test(path)) {
                 settings.addNamePrefix && addNamePrefix();
+            }
+            // campaign scripts page
+            if (/CampaignBuilder.*CampaignScripts/.test(path)) {
+                // if no scripts add a new one
+                if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
+                    location.assign($('#MMLink1').attr('href'));
+                }
             }
             // site pages page
             if (/CampaignBuilder.*DomainLocations$/.test(href)) {

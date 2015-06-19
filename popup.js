@@ -26,6 +26,7 @@
         addNamePrefix:        true,
         improveCM:            true,
         omitActionDetails:    true,
+        addScriptIfNo:        true,
         filterActionLog:      false,
         actionLogFiltersList: ['DATE', 'CAMPAIGN', 'ACTIONS', 'BROWSER']
     };
