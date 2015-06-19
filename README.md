@@ -17,12 +17,9 @@ Version: 1.13
 * When creating a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 
 #### Links
-
-[EMEA UI](https://ui61.maxymiser.com/)
-
-[US UI](https://ui61us.maxymiser.com/)
-
-[Demo UI](https://demo.maxymiser.org/)
+- [EMEA UI](https://ui61.maxymiser.com/)
+- [US UI](https://ui61us.maxymiser.com/)
+- [Demo UI](https://demo.maxymiser.org/)
 
 Feel free to tell me if you need sth else
 
