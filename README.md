@@ -14,7 +14,7 @@ Version: 1.13
 * On Campaign Actions and Campaign Settings lets you go directly to Edit Action page when you click 'details' link
 * If there are no scripts on Campaign Scripts page adds a new one
 * Replaces spinner gif to have transparent background
-* When creating a new script adds some dummy code to Script fgitield in order to prevent validation error when saving with blank script body
+* When creating a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 
 #### Links
 
