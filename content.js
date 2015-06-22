@@ -97,7 +97,7 @@
         var e;
 
         setTimeout(function() {
-            e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name, #b-mm-edit-variant__variant-name, .b-mm-edit-segment-rule_ruleInfo-ruleName-input').eq(0);
+            e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name, #b-mm-edit-variant__variant-name').eq(0);
             e.length && e.focus();
         }, 870);
     }
