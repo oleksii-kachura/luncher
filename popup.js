@@ -8,7 +8,7 @@
 
 ;
 (function() {
-    var $, defaultSettings;
+    var $, defaultSettings, newSettings;
 
     $               = window.$;
     defaultSettings = {
@@ -33,7 +33,7 @@
 
     /**
      * Updates chrome storage.
-     * @param {object} settings - Can be up to 512 properties.
+     * @param {object} settings - Can include up to 512 properties.
      */
     function updateStorage(settings) {
         chrome.storage.sync.set(settings);
@@ -58,6 +58,17 @@
                 console.log('%s: %s => %s', key, storageChange.oldValue, storageChange.newValue);
             }
         });
+    }
+
+    /**
+     * Show notification in popup.
+     * @param {string} message
+     */
+    function notify(message) {
+        var $notification;
+        $notification = $('.notification');
+        $notification.text(message).fadeIn(80);
+        $('button').on('blur', function() { $notification.fadeOut(100); });
     }
 
     /**
@@ -93,21 +104,16 @@
 
         updateStorage(settings);
         updateView(settings);
-
-        // representation
-        $notification.fadeIn(100);
-        $('.settings-save').on('blur', function() { $notification.fadeOut(); });
+        notify("Settings saved!");
     }
 
+    /**
+     * Reset settings to default.
+     */
     function resetChanges() {
         updateStorage(defaultSettings);
         updateView(defaultSettings);
-    }
-
-    function adjustPopupHeight() {
-        var popupHeight = $('.wrapper').height();
-        $('html').height(popupHeight);
-        $('body').height(popupHeight);
+        notify("Settings reset to default");
     }
 
     /**
@@ -129,21 +135,44 @@
         });
     }
 
-    /* Run */
-    // retrieve settings from chrome storage and show it to user
-    chrome.storage.sync.get(null, function(settings) { $(document).ready(function() {
-        $.extend(defaultSettings, settings);
-        updateStorage(defaultSettings);
-        updateView(defaultSettings);
+    /**
+     * Adjusts height of the extension popup.
+     */
+    function adjustPopupHeight() {
+        var popupHeight = $('.wrapper').height();
+        $('html').height(popupHeight);
+        $('body').height(popupHeight);
+    }
 
-        $('.settings-save').click(saveChanges);
-        $('.settings-reset').click(resetChanges);
-
-        //representation
+    /**
+     * Improves user experience.
+     */
+    function representationBlock() {
         adjustPopupHeight();
         $('input[type=checkbox], .settings-reset').click(adjustPopupHeight);
         $('input[type=password]')
             .mouseover(function() { !this.value && (this.type = "text"); })
             .mouseout(function() { this.type = "password"; });
-    }); });
+    }
+
+    /**
+     * Initializes logic of extension popup.
+     * @param {object} settings - Data received from chrome storage.
+     */
+    function initPopup(settings) {
+        newSettings = $.extend({}, defaultSettings, settings);
+        updateStorage(newSettings);
+
+        $(document).ready(function() {
+            updateView(newSettings);
+            $('.settings-save').click(saveChanges);
+            $('.settings-reset').click(resetChanges);
+            representationBlock();
+        });
+    }
+
+    /* Run *******************************************************/
+
+    // retrieve settings from chrome storage and launch popup logic
+    chrome.storage.sync.get(null, initPopup);
 })();
