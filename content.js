@@ -8,18 +8,22 @@
 
 ;
 (function() {
-    var $          = window.$,
-        path       = location.pathname,
-        href       = location.href,
-        host       = location.host,
-        settings   = {};
+    var $, path, href, host, settings;
+
+    $ = window.$;
+    path = location.pathname;
+    href = location.href;
+    host = location.host;
+    settings = {};
 
     /**
      * Detects current environment.
      * @returns {string} - Empty string | 'US' | 'Demo'
      */
     function detectEnvironment() {
-        var env = '';
+        var env;
+
+        env = '';
         if (/us/.test(host)) { env = 'US'; }
         if (/demo/.test(host)) { env = 'Demo'; }
         return env;
@@ -30,19 +34,26 @@
      * Allows you to upload/download/remove multiple files at a time, use drag&drop to add files.
      */
     function improveContentManager(){ setTimeout(function() {
-        var e=function(){var e=document.createElement("style");return jQuery("head").append(e),function(n){e.styleSheet?e.styleSheet.cssText+=n:e.innerHTML+=n}}();e("#upload-log{position: absolute;top: 25%;width: 400px;left: 50%;margin-left: -200px;color: white;z-index: 1010;} #upload-log>div{text-indent:-20px;} #upload-log a{color: #bada55;} .mm-uploadError{color:rgb(252, 131, 131);} .b-mm__progress-bar-overlay__ellipse{position:absolute;width:auto;top:20%;margin-left:-75px;} .mm-dropzone{} .mm-dropzone.mm-over{background: rgb(220, 252, 220);} .mm-dropzone.mm-over > div{visibility:hidden;} .mm-assetCheckbox{position: absolute;top: 0;} .b-mm__progress-bar-overlay__caption{text-align:center;text-indent:-99999px;}");var n=location.href.match(/\/(\d+)\/CampaignContentManager/)[1],a=function(){jQuery("body").append('<div class="b-mm__progress-bar-overlay-container"><div class="b-mm__progress-bar-overlay-background"></div><div class="b-mm__progress-bar-overlay__ellipse"><div class="b-mm__progress-bar-overlay__ellipse-item"><i class="b-mm__progress-bar-overlay__loading-icon"></i><div class="b-mm__progress-bar-overlay__caption">Uploading</div></div></div><div id="upload-log"></div></div>')},t=function(e){var n=jQuery("#upload-log");return jQuery("<div>"+e+"</div>").appendTo(n)},r=function(e){jQuery.when.apply(jQuery,e).done(function(){t("<br>"),jQuery(".b-mm__progress-bar-overlay__loading-icon").hide(),t('finished. please, examine log and <a href="javascript:location.reload()">reload page</a>')})},o=function(){return jQuery(".b-mm-content-manager__content-item-layout")},i=function(){return o().not(":has(.b-mm-content-manager__content-item__in-use)")},s=function(e){return jQuery.ajax({url:location.href+"/DeleteContentManagerItem",type:"post",data:{contentManagerItemId:e}})},c=function(e){var n=jQuery('<a download href="'+e+'"></a>').hide().appendTo(d);n[0].click(),n.remove()},p=function(e){return(e.match(/var errors = .*?\["([^"]+)/)||[,""])[1]},l=jQuery(".b-mm-content-manager__content-container__you-have-no-content-items, .b-mm-content-manager__content-item-container").filter(":visible").addClass("mm-dropzone"),d=jQuery("<div>loading elements and variants data, please wait a little bit...</div>").insertBefore(l);jQuery.when(jQuery.get(location.href.replace("/CampaignContentManager","/CampaignContent")),jQuery.get(location.href.replace("/CampaignContentManager","/CampaignScripts")),jQuery.post(location.href+"/GetContentManagerItemList")).done(function(e,u,m){e=jQuery(e[0]),u=jQuery(u[0]),m=m[0];var f=function(e){return m.filter(function(n){return n.Name===e})[0]},v={};e.find(".content-element-block").each(function(){var e=jQuery(this),n=e.find(".title-block").text(),a=e.find('a[href*="EditElement"]').attr("href").split("/").pop();v[n]={id:a,variants:{}},e.find('a[href*="EditVariant"]').each(function(){var e=this.href.split("/").pop(),a=jQuery(this).closest("tr").find("span").eq(0).text();v[n].variants[a]=e})});var h={};u.find('a[href*="CampaignScripts/Edit"]').each(function(){var e=this.href.split("/").pop(),n=jQuery(this).closest("tr").find("td").eq(0).text().trim();h[n]=e}),d.html("what you'd like to do?"),l.before("<br><div>to upload files, drop them here:</div>"),d.append("<br>",jQuery('<a href="javascript:;">remove unused assets</a>').click(function(){if(confirm("Are you sure you want to remove ALL unused assets?")){a();var e=[];i().each(function(){var n=+jQuery(this).find('input[name="id"]').val(),a=jQuery(this).find(".b-mm-content-manager__content-item__name").text(),r=t("deleting "+a+", id "+n+"...");e.push(s(n).done(function(){r.append(" DONE")}).fail(function(){r.append(" FAILED")}))}),r(e)}})),d.append(" | ",jQuery('<a href="javascript:;">remove selected assets</a>').click(function(){if(confirm("Are you sure you want to remove selected assets?")){a();var e=[];i().has(".mm-assetCheckbox:checked").each(function(){var n=+jQuery(this).find('input[name="id"]').val(),a=jQuery(this).find(".b-mm-content-manager__content-item__name").text(),r=t("deleting "+a+", id "+n+"...");e.push(s(n).done(function(){r.append(" DONE")}).fail(function(){r.append(" FAILED")}))}),r(e)}})),d.append("<br>",jQuery('<a href="javascript:;">download all assets</a>').click(function(){o().find(".b-mm-content-manager__content-item__thumbnail").each(function(e,n){c(n.src)})})),d.append(" | ",jQuery('<a href="javascript:;">download selected assets</a>').click(function(){o().has(".mm-assetCheckbox:checked").find(".b-mm-content-manager__content-item__thumbnail").each(function(e,n){c(n.src)})})),o().append('<input type="checkbox" name="mm-assetCheckbox" class="mm-assetCheckbox">'),l[0].addEventListener("dragover",function(e){e.stopPropagation(),e.preventDefault(),e.dataTransfer.dropEffect="copy",l.addClass("mm-over")},!1),l[0].addEventListener("dragleave",function(){l.removeClass("mm-over")},!1),l[0].addEventListener("drop",function(e){e.stopPropagation(),e.preventDefault();{var i=e.dataTransfer.files,c=!1;o().find(".b-mm-content-manager__content-item__name").text()}jQuery.each(i,function(e,n){return f(n.name)?(c=!0,!1):void 0});var d;c&&(d=confirm("There are some files that already exist with the same name.\nDo you want to replace them automatically?"));var u=[];a(),jQuery.each(i,function(e,a){var r=function(){var e=new FormData;return e.append("file",a),e.append("campaignId",n),e},o=function(){return jQuery.ajax({url:location.href+"/ContentManagerItemUploadForm",data:r(),contentType:!1,processData:!1,type:"post"})},i=t("uploading "+a.name+"..."),c=f(a.name),l=function(){var e=jQuery.Deferred();if(i.html("uploading "+a.name+"..."),c.IsUsage){var n=[],t=jQuery.Deferred();jQuery.each(c.Elements,function(e,a){var r=v[a.Name].id;jQuery.each(a.Variants,function(e,o){var i=v[a.Name].variants[o.Name],s=function(e){return jQuery.ajax({url:location.href.replace("/CampaignContentManager","/CampaignContentVariant/UpdateVariant"),type:"post",contentType:"application/json; charset=utf-8",dataType:"json",data:JSON.stringify({clientId:null,elementId:r,htmlContent:e,id:i,name:o.Name,propensityFieldId:null})})},c=jQuery.Deferred();n.push(c),jQuery.post(location.href.replace("/CampaignContentManager","/CampaignContentVariant/GetVariant"),{variantId:i},function(e){var a=e.HtmlContent,r=a.replace(/\(ContentManager:/g,"(ContentManager-tmp:");s(r).done(function(){c.resolve()}),t.done(function(){n.push(s(a))})})})}),jQuery.each(c.CampaignScripts,function(e,a){var r=h[a.Name],o=function(e,n){return jQuery.ajax({url:location.href.replace("/CampaignContentManager","/CampaignScripts/UpdateCampaignScript"),type:"post",contentType:"application/json; charset=utf-8",dataType:"json",data:JSON.stringify({clientId:null,description:n,id:r,name:a.Name,script:e})})},i=jQuery.Deferred();n.push(i),jQuery.post(location.href.replace("/CampaignContentManager","/CampaignScripts/GetCampaignScript"),{campaignScriptId:r},function(e){var a=e.Script,r=a.replace(/\(ContentManager:/g,"(ContentManager-tmp:"),s=e.Description||"";o(r,s).done(function(){i.resolve()}),t.done(function(){n.push(o(a,s))})})}),jQuery.when.apply(jQuery,n).done(function(){s(c.Id).done(function(){o().done(function(){n=[],t.resolve(),jQuery.when.apply(jQuery,n).done(function(){e.resolve()})})})})}else s(c.Id).done(function(){o().done(function(){e.resolve()})});return e.promise()},m=jQuery.Deferred();m.done(function(e){return e?(i.append(' FAILED: <span class="mm-uploadError">'+e+"</span> "),void(/file with the same name already exists/.test(e)&&(d?l():jQuery('<a href="javascript:;">replace this file with new one</a>').appendTo(i).click(function(){l().done(function(){i.append(" DONE")})})))):void i.append(" DONE")}),u.push(m),d&&c?l().done(function(){m.resolve()}):o().done(function(e){var n=p(e);""===n?m.resolve():m.resolve(n)})}),r(u)},!1)})
+        var e;
+
+        e = function() {
+            var e = document.createElement("style");
+            return jQuery("head").append(e), function(n) {e.styleSheet ? e.styleSheet.cssText += n : e.innerHTML += n}
+        }();
+        e("#upload-log{position: absolute;top: 25%;width: 400px;left: 50%;margin-left: -200px;color: white;z-index: 1010;} #upload-log>div{text-indent:-20px;} #upload-log a{color: #bada55;} .mm-uploadError{color:rgb(252, 131, 131);} .b-mm__progress-bar-overlay__ellipse{position:absolute;width:auto;top:20%;margin-left:-75px;} .mm-dropzone{} .mm-dropzone.mm-over{background: rgb(220, 252, 220);} .mm-dropzone.mm-over > div{visibility:hidden;} .mm-assetCheckbox{position: absolute;top: 0;} .b-mm__progress-bar-overlay__caption{text-align:center;text-indent:-99999px;}");var n=location.href.match(/\/(\d+)\/CampaignContentManager/)[1],a=function(){jQuery("body").append('<div class="b-mm__progress-bar-overlay-container"><div class="b-mm__progress-bar-overlay-background"></div><div class="b-mm__progress-bar-overlay__ellipse"><div class="b-mm__progress-bar-overlay__ellipse-item"><i class="b-mm__progress-bar-overlay__loading-icon"></i><div class="b-mm__progress-bar-overlay__caption">Uploading</div></div></div><div id="upload-log"></div></div>')},t=function(e){var n=jQuery("#upload-log");return jQuery("<div>"+e+"</div>").appendTo(n)},r=function(e){jQuery.when.apply(jQuery,e).done(function(){t("<br>"),jQuery(".b-mm__progress-bar-overlay__loading-icon").hide(),t('finished. please, examine log and <a href="javascript:location.reload()">reload page</a>')})},o=function(){return jQuery(".b-mm-content-manager__content-item-layout")},i=function(){return o().not(":has(.b-mm-content-manager__content-item__in-use)")},s=function(e){return jQuery.ajax({url:location.href+"/DeleteContentManagerItem",type:"post",data:{contentManagerItemId:e}})},c=function(e){var n=jQuery('<a download href="'+e+'"></a>').hide().appendTo(d);n[0].click(),n.remove()},p=function(e){return(e.match(/var errors = .*?\["([^"]+)/)||[,""])[1]},l=jQuery(".b-mm-content-manager__content-container__you-have-no-content-items, .b-mm-content-manager__content-item-container").filter(":visible").addClass("mm-dropzone"),d=jQuery("<div>loading elements and variants data, please wait a little bit...</div>").insertBefore(l);jQuery.when(jQuery.get(location.href.replace("/CampaignContentManager","/CampaignContent")),jQuery.get(location.href.replace("/CampaignContentManager","/CampaignScripts")),jQuery.post(location.href+"/GetContentManagerItemList")).done(function(e,u,m){e=jQuery(e[0]),u=jQuery(u[0]),m=m[0];var f=function(e){return m.filter(function(n){return n.Name===e})[0]},v={};e.find(".content-element-block").each(function(){var e=jQuery(this),n=e.find(".title-block").text(),a=e.find('a[href*="EditElement"]').attr("href").split("/").pop();v[n]={id:a,variants:{}},e.find('a[href*="EditVariant"]').each(function(){var e=this.href.split("/").pop(),a=jQuery(this).closest("tr").find("span").eq(0).text();v[n].variants[a]=e})});var h={};u.find('a[href*="CampaignScripts/Edit"]').each(function(){var e=this.href.split("/").pop(),n=jQuery(this).closest("tr").find("td").eq(0).text().trim();h[n]=e}),d.html("what you'd like to do?"),l.before("<br><div>to upload files, drop them here:</div>"),d.append("<br>",jQuery('<a href="javascript:;">remove unused assets</a>').click(function(){if(confirm("Are you sure you want to remove ALL unused assets?")){a();var e=[];i().each(function(){var n=+jQuery(this).find('input[name="id"]').val(),a=jQuery(this).find(".b-mm-content-manager__content-item__name").text(),r=t("deleting "+a+", id "+n+"...");e.push(s(n).done(function(){r.append(" DONE")}).fail(function(){r.append(" FAILED")}))}),r(e)}})),d.append(" | ",jQuery('<a href="javascript:;">remove selected assets</a>').click(function(){if(confirm("Are you sure you want to remove selected assets?")){a();var e=[];i().has(".mm-assetCheckbox:checked").each(function(){var n=+jQuery(this).find('input[name="id"]').val(),a=jQuery(this).find(".b-mm-content-manager__content-item__name").text(),r=t("deleting "+a+", id "+n+"...");e.push(s(n).done(function(){r.append(" DONE")}).fail(function(){r.append(" FAILED")}))}),r(e)}})),d.append("<br>",jQuery('<a href="javascript:;">download all assets</a>').click(function(){o().find(".b-mm-content-manager__content-item__thumbnail").each(function(e,n){c(n.src)})})),d.append(" | ",jQuery('<a href="javascript:;">download selected assets</a>').click(function(){o().has(".mm-assetCheckbox:checked").find(".b-mm-content-manager__content-item__thumbnail").each(function(e,n){c(n.src)})})),o().append('<input type="checkbox" name="mm-assetCheckbox" class="mm-assetCheckbox">'),l[0].addEventListener("dragover",function(e){e.stopPropagation(),e.preventDefault(),e.dataTransfer.dropEffect="copy",l.addClass("mm-over")},!1),l[0].addEventListener("dragleave",function(){l.removeClass("mm-over")},!1),l[0].addEventListener("drop",function(e){e.stopPropagation(),e.preventDefault();{var i=e.dataTransfer.files,c=!1;o().find(".b-mm-content-manager__content-item__name").text()}jQuery.each(i,function(e,n){return f(n.name)?(c=!0,!1):void 0});var d;c&&(d=confirm("There are some files that already exist with the same name.\nDo you want to replace them automatically?"));var u=[];a(),jQuery.each(i,function(e,a){var r=function(){var e=new FormData;return e.append("file",a),e.append("campaignId",n),e},o=function(){return jQuery.ajax({url:location.href+"/ContentManagerItemUploadForm",data:r(),contentType:!1,processData:!1,type:"post"})},i=t("uploading "+a.name+"..."),c=f(a.name),l=function(){var e=jQuery.Deferred();if(i.html("uploading "+a.name+"..."),c.IsUsage){var n=[],t=jQuery.Deferred();jQuery.each(c.Elements,function(e,a){var r=v[a.Name].id;jQuery.each(a.Variants,function(e,o){var i=v[a.Name].variants[o.Name],s=function(e){return jQuery.ajax({url:location.href.replace("/CampaignContentManager","/CampaignContentVariant/UpdateVariant"),type:"post",contentType:"application/json; charset=utf-8",dataType:"json",data:JSON.stringify({clientId:null,elementId:r,htmlContent:e,id:i,name:o.Name,propensityFieldId:null})})},c=jQuery.Deferred();n.push(c),jQuery.post(location.href.replace("/CampaignContentManager","/CampaignContentVariant/GetVariant"),{variantId:i},function(e){var a=e.HtmlContent,r=a.replace(/\(ContentManager:/g,"(ContentManager-tmp:");s(r).done(function(){c.resolve()}),t.done(function(){n.push(s(a))})})})}),jQuery.each(c.CampaignScripts,function(e,a){var r=h[a.Name],o=function(e,n){return jQuery.ajax({url:location.href.replace("/CampaignContentManager","/CampaignScripts/UpdateCampaignScript"),type:"post",contentType:"application/json; charset=utf-8",dataType:"json",data:JSON.stringify({clientId:null,description:n,id:r,name:a.Name,script:e})})},i=jQuery.Deferred();n.push(i),jQuery.post(location.href.replace("/CampaignContentManager","/CampaignScripts/GetCampaignScript"),{campaignScriptId:r},function(e){var a=e.Script,r=a.replace(/\(ContentManager:/g,"(ContentManager-tmp:"),s=e.Description||"";o(r,s).done(function(){i.resolve()}),t.done(function(){n.push(o(a,s))})})}),jQuery.when.apply(jQuery,n).done(function(){s(c.Id).done(function(){o().done(function(){n=[],t.resolve(),jQuery.when.apply(jQuery,n).done(function(){e.resolve()})})})})}else s(c.Id).done(function(){o().done(function(){e.resolve()})});return e.promise()},m=jQuery.Deferred();m.done(function(e){return e?(i.append(' FAILED: <span class="mm-uploadError">'+e+"</span> "),void(/file with the same name already exists/.test(e)&&(d?l():jQuery('<a href="javascript:;">replace this file with new one</a>').appendTo(i).click(function(){l().done(function(){i.append(" DONE")})})))):void i.append(" DONE")}),u.push(m),d&&c?l().done(function(){m.resolve()}):o().done(function(e){var n=p(e);""===n?m.resolve():m.resolve(n)})}),r(u)},!1)})
     }, 600); }
 
     /**
      * Adds campaign prefix to the name of script/element.
      */
     function addNamePrefix() {
+        var p, e;
+
         setTimeout(function() {
-            var p = $('#main').find('.breadcrumb .mm-name span').text().replace(/(_| ).*/, ''),
-                e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name');
-            e.length && e.val(p + '_');
-            e.focus();
-        }, 860);
+            p = $('#main').find('.breadcrumb .mm-name span').text().replace(/(_| ).*/, '');
+            e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name');
+            e.length && p.length && e.val(p + '_');
+        }, 850);
     }
 
     /**
@@ -50,34 +61,25 @@
      * Format [dd.mm.yyyy by Name Surname]
      */
     function addDescription() {
+        var d, f, b, v;
+
         setTimeout(function() {
-            var d, f, b, v;
             d = (new Date).toLocaleString('pl');
             f = $('#user_login').find('input.mm-dd-input:eq(0)').val();
             b = $('#Description, #description, #descr-textarea-id');
             v = d.substring(0, d.indexOf(',')) + ' by ' + f + '\n';
             b.length && b.val(v);
-            b.focus();
         }, 850);
-    }
-
-    /**
-     * Makes action 'details' link omit Action Details page and go directly to Edit Action Page.
-     */
-    function omitActionDetails() {
-        var href;
-        $('.mm-CampaignActions .dashbrd-lnk-std, .mm-details').each(function(k, link) {
-            href = $(link).attr('href').replace(/campaign.+Details/, 'DomainActions/Edit');
-            $(link).attr('href', href);
-        });
     }
 
     /**
      * Adds some dummy code to script field in order to prevent validation error when you save script with blank body.
      */
     function addDummyScriptBody(code) {
+        var $highlight;
+
         setTimeout(function() {
-            var $highlight = $('#heightlight_button, #codeHighlight').eq(0);
+            $highlight = $('#heightlight_button, #codeHighlight').eq(0);
             if ($highlight.prop('checked')) {
                 $highlight.click();
                 $('#script, #Script').val(code);
@@ -85,14 +87,40 @@
             } else {
                 $('#script, #Script').val(code);
             }
-        }, 840);
+        }, 850);
+    }
+
+    /**
+     * Sets focus on Name input field.
+     */
+    function focusName() {
+        var e;
+
+        setTimeout(function() {
+            e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name, #b-mm-edit-variant__variant-name, .b-mm-edit-segment-rule_ruleInfo-ruleName-input').eq(0);
+            e.length && e.focus();
+        }, 870);
+    }
+
+    /**
+     * Makes action 'details' link omit Action Details page and go directly to Edit Action Page.
+     */
+    function omitActionDetails() {
+        var href;
+
+        $('.mm-CampaignActions .dashbrd-lnk-std, .mm-details').each(function(k, link) {
+            href = $(link).attr('href').replace(/campaign.+Details/, 'DomainActions/Edit');
+            $(link).attr('href', href);
+        });
     }
 
     /**
      * Automatically logs you in with credentials specified in settings.
      */
     function autoLogin() {
-        var env = detectEnvironment();
+        var env;
+
+        env = detectEnvironment();
         if (settings['login' + env] && settings['password' + env] && !$('.auth-top-messages').text().replace(/\s/g, '').length) {
             $("#Login").val(settings['login' + env]);
             $("#Password").val(settings['password' + env]);
@@ -105,7 +133,9 @@
      * @param params - Use this argument if URL parameters which set grid size differ from standard ones.
      */
     function showMoreItemsPerPage(params) {
-        var numberOfItems = settings.numberOfItems || 50;
+        var numberOfItems;
+
+        numberOfItems = settings.numberOfItems || 50;
         params = (params || '?Grid-page=1&Grid-orderBy=~&Grid-filter=~&Grid-size=50').replace(/50/g, numberOfItems);
         location.assign(href + params);
     }
@@ -124,15 +154,20 @@
      * Replaces default spinner image to have transparent background.
      */
     function replaceSpinner() {
-        var spinnerURL = chrome.extension.getURL('img/spinner.gif'),
-            $spinner = $('#spinner');
+        var spinnerURL, $spinner;
+
+        spinnerURL = chrome.extension.getURL('img/spinner.gif');
+        $spinner = $('#spinner');
         if ($spinner.length) {
             $spinner.attr('src', spinnerURL).css({opacity: 1});
         }
     }
 
-    /* Run */
-    chrome.storage.sync.get(null, function(result) {
+    /**
+     * Applies all fixes on corresponding pages.
+     * @param {object} result - Data received from chrome storage.
+     */
+    function makeLifeBetter(result) {
         settings = result;
 
         /* Before document is ready */
@@ -145,43 +180,61 @@
         $(document).ready(function() {
             // common
             replaceSpinner();
-            // login page
-            if (/Auth.Login/.test(path)) {
-                settings.autoLogin && autoLogin();
-            }
-            // add campaign/domain script page
-            if (/CampaignBuilder.*((Domain|Campaign)Scripts.Add)/.test(path)) {
-                addDummyScriptBody('//your magic goes here');
-            }
-            // add new action/element/script page
-            if (/CampaignBuilder.*((DomainActions.Add)|(CampaignContent.AddElement)|((Domain|Campaign)Scripts.Add))/.test(path)) {
-                settings.addDescription && addDescription();
-            }
-            // add campaign element/script page
-            if (/CampaignBuilder.*((CampaignContent.AddElement)|(CampaignScripts.Add))/.test(path)) {
-                settings.addNamePrefix && addNamePrefix();
-            }
-            // site pages page
-            if (/CampaignBuilder.*DomainLocations$/.test(href)) {
-                settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
-            }
-            // campaign settings/actions page
-            if (/CampaignBuilder.*Campaign(Settings|Goals)/.test(path)) {
-                settings.omitActionDetails && omitActionDetails();
-            }
-            // content manager page
-            if (/CampaignBuilder.*CampaignContentManager/.test(path)) {
-                settings.improveCM && improveContentManager();
-            }
-            // add new site page
-            if (/CampaignBuilder.*DomainLocations.Add/.test(path)) {
-                // check Overlay option by default
-                $('#IsOverlay').click();
-                $('#form0').find('.mm-switcher.disabled').addClass('enabled');
-                // set page Order to 200 (10-200 - general pages, 200-700 - campaign specific pages, 700-1000 - fake pages)
-                $('#ProcessingOrder').val(200).attr('title', '-10 - Site utilities\n  10-200 - Common pages\n  200-700 - Campaign specific pages\n  700-1000 - Fake pages');
+            // campaign builder
+            if (/CampaignBuilder/.test(path)) {
+                // add new script/action/page/element/variant/segmentRule page
+                if (/Add/.test(path)) {
+                    focusName();
+                }
+                // add campaign/domain script page
+                if (/Scripts.Add/.test(path)) {
+                    addDummyScriptBody('//your magic goes here');
+                }
+                // add new action/element/script page
+                if (/(CampaignContent.AddElement)|((DomainActions|Scripts).Add)/.test(path)) {
+                    settings.addDescription && addDescription();
+                }
+                // add campaign element/script page
+                if (/(Campaign.+Add)/.test(path)) {
+                    settings.addNamePrefix && addNamePrefix();
+                }
+                // site pages page
+                if (/DomainLocations$/.test(href)) {
+                    settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
+                }
+                // content manager page
+                if (/CampaignContentManager/.test(path)) {
+                    settings.improveCM && improveContentManager();
+                }
+                // add new site page
+                if (/DomainLocations.Add/.test(path)) {
+                    // check Overlay option by default
+                    $('#IsOverlay').click();
+                    $('#form0').find('.mm-switcher.disabled').addClass('enabled');
+                    // set page Order to 200 (10-200 - general pages, 200-700 - campaign specific pages, 700-1000 - virtual pages)
+                    $('#ProcessingOrder').val(200).attr('title', '-10 - Site utilities\n  10-200 - Common pages\n  200-700 - Campaign specific pages\n  700-1000 - Virtual pages');
 
-                settings.addDescription && addDescription();
+                    settings.addDescription && addDescription();
+                }
+                // campaign scripts page
+                if (/CampaignScripts/.test(path)) {
+                    // if no scripts add a new one
+                    if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
+                        location.assign($('#MMLink1').attr('href'));
+                    }
+                }
+                // add/edit action page
+                if (/DomainActions.(Add|Edit)/.test(path)) {
+                    $('#ActionType').on('change', function() {
+                        if (this.value === 'Sales_Amount') {
+                            $('#ActionMultiplier').val('0.01');
+                        }
+                    });
+                }
+                // campaign settings/actions page
+                if (/Campaign(Settings|Goals)/.test(path)) {
+                    settings.omitActionDetails && omitActionDetails();
+                }
             }
             // action log page
             if (/Admin.*ActionLog/.test(path)) {
@@ -199,24 +252,16 @@
                         });
                         // apply flags
                         $('#bApply').click();
-                    }, 700);
+                    }, 750);
                 }
             }
-            // campaign scripts page
-            if (/CampaignBuilder.*CampaignScripts/.test(path)) {
-                // if no scripts add a new one
-                if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
-                    location.assign($('#MMLink1').attr('href'));
-                }
-            }
-            // add/edit action page
-            if (/CampaignBuilder.*DomainActions.(Add|Edit)/.test(path)) {
-                $('#ActionType').on('change', function() {
-                    if (this.value === 'Sales_Amount') {
-                        $('#ActionMultiplier').val('0.01');
-                    }
-                });
+            // login page
+            if (/Auth.Login/.test(path)) {
+                settings.autoLogin && autoLogin();
             }
         });
-    });
+    }
+
+    /* Run *************************************/
+    chrome.storage.sync.get(null, makeLifeBetter);
 })();
