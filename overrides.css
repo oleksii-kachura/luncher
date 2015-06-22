@@ -1,1 +1,1 @@
-#spinner { opacity: 0; transition: opacity .2s; }
+#spinner { height: 24px; padding: 4px 0; opacity: 0; transition: opacity .3s; }

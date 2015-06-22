@@ -133,8 +133,8 @@
     // retrieve settings from chrome storage and show it to user
     chrome.storage.sync.get(null, function(settings) { $(document).ready(function() {
         $.extend(defaultSettings, settings);
-        updateView(defaultSettings);
         updateStorage(defaultSettings);
+        updateView(defaultSettings);
 
         $('.settings-save').click(saveChanges);
         $('.settings-reset').click(resetChanges);
