@@ -147,7 +147,7 @@
         setTimeout(function() {
             $('#Grid, #GridLocations, #grid').find('.t-dropdown-wrap.t-state-default, .k-dropdown-wrap.k-state-default').click();
             $('.t-animation-container .t-item:contains(50), .k-animation-container .k-item:contains(50)').click();
-        }, 600);
+        }, 770);
     }
 
     /**
