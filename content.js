@@ -161,13 +161,6 @@
             if (/CampaignBuilder.*((CampaignContent.AddElement)|(CampaignScripts.Add))/.test(path)) {
                 settings.addNamePrefix && addNamePrefix();
             }
-            // campaign scripts page
-            if (/CampaignBuilder.*CampaignScripts/.test(path)) {
-                // if no scripts add a new one
-                if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
-                    location.assign($('#MMLink1').attr('href'));
-                }
-            }
             // site pages page
             if (/CampaignBuilder.*DomainLocations$/.test(href)) {
                 settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
@@ -208,6 +201,21 @@
                         $('#bApply').click();
                     }, 700);
                 }
+            }
+            // campaign scripts page
+            if (/CampaignBuilder.*CampaignScripts/.test(path)) {
+                // if no scripts add a new one
+                if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
+                    location.assign($('#MMLink1').attr('href'));
+                }
+            }
+            // add/edit action page
+            if (/CampaignBuilder.*DomainActions.(Add|Edit)/.test(path)) {
+                $('#ActionType').on('change', function() {
+                    if (this.value === 'Sales_Amount') {
+                        $('#ActionMultiplier').val('0.01');
+                    }
+                });
             }
         });
     });

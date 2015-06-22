@@ -1,7 +1,7 @@
 # UI-Fixer
 [Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in Maxymiser UI.
 
-Version: 1.16
+Version: 1.17
 
 ## Features
 
@@ -19,8 +19,9 @@ Version: 1.16
 * Sets Overlay when adding a new site page
 * Replaces spinner gif to have transparent background
 * When creating a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
+* When creating action with type "Sales amount" sets value multiplier to 0.01
 
-### Links
+#### Links
 - [EMEA UI](https://ui61.maxymiser.com/)
 - [US UI](https://ui61us.maxymiser.com/)
 - [Demo UI](https://demo.maxymiser.org/)
