@@ -76,16 +76,19 @@
      * Adds some dummy code to script field in order to prevent validation error when you save script with blank body.
      */
     function addDummyScriptBody(code) {
-        var $highlight;
+        var $highlight, $script;
 
         setTimeout(function() {
             $highlight = $('#heightlight_button, #codeHighlight').eq(0);
-            if ($highlight.prop('checked')) {
-                $highlight.click();
-                $('#script, #Script').val(code);
-                $highlight.click();
-            } else {
-                $('#script, #Script').val(code);
+            $script = $('#script, #Script');
+            if (!$script.val()) {
+                if ($highlight.prop('checked')) {
+                    $highlight.click();
+                    $script.val(code);
+                    $highlight.click();
+                } else {
+                    $script.val(code);
+                }
             }
         }, 850);
     }
