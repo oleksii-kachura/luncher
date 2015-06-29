@@ -52,7 +52,7 @@
         setTimeout(function() {
             p = $('#main').find('.breadcrumb .mm-name span').text().replace(/(_| ).*/, '');
             e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name');
-            e.length && p.length && e.val(p + '_');
+            e.length && !e.val() && p.length && e.val(p + '_');
         }, 850);
     }
 
@@ -168,7 +168,7 @@
 
     /**
      * Applies all fixes on corresponding pages.
-     * @param {object} result - Data received from chrome storage.
+     * @param {object} result - Extension settings received from chrome storage.
      */
     function makeLifeBetter(result) {
         settings = result;
