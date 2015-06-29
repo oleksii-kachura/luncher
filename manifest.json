@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "UI fixer",
-  "version": "1.19",
+  "version": "1.20",
   "description": "Customize your Maxymiser UI experience",
 
   "permissions": ["tabs", "storage"],

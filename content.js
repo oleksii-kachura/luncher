@@ -68,7 +68,7 @@
             f = $('#user_login').find('input.mm-dd-input:eq(0)').val();
             b = $('#Description, #description, #descr-textarea-id');
             v = d.substring(0, d.indexOf(',')) + ' by ' + f + '\n';
-            b.length && b.val(v);
+            b.length && !b.val() && b.val(v);
         }, 850);
     }
 
