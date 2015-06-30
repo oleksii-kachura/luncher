@@ -53,7 +53,7 @@
             p = $('#main').find('.breadcrumb .mm-name span').text().replace(/(_| ).*/, '');
             e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name');
             e.length && !e.val() && p.length && e.val(p + '_');
-        }, 850);
+        }, 900);
     }
 
     /**
@@ -69,7 +69,7 @@
             b = $('#Description, #description, #descr-textarea-id');
             v = d.substring(0, d.indexOf(',')) + ' by ' + f + '\n';
             b.length && !b.val() && b.val(v);
-        }, 850);
+        }, 900);
     }
 
     /**
@@ -90,7 +90,7 @@
                     $script.val(code);
                 }
             }
-        }, 850);
+        }, 900);
     }
 
     /**
@@ -102,7 +102,7 @@
         setTimeout(function() {
             e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name, #b-mm-edit-variant__variant-name').eq(0);
             e.length && e.focus();
-        }, 870);
+        }, 900);
     }
 
     /**

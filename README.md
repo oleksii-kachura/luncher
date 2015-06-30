@@ -1,7 +1,7 @@
 # UI-Fixer
 [Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in Maxymiser UI.
 
-Version: 1.21
+Version: 1.22
 
 ## Features
 
@@ -27,6 +27,6 @@ Version: 1.21
 - [US UI](https://ui61us.maxymiser.com/)
 - [Demo UI](https://demo.maxymiser.org/)
 
-Feel free to tell me if you need sth else
+Feel free to contact me for any feedback
 
 <alex.kachura@maxymiser.com>
