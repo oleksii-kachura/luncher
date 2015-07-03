@@ -1,1 +1,6 @@
 #spinner { height: 24px; padding: 4px 0; opacity: 0; transition: opacity .3s; }
+body .header > ul > li { float: right; }
+body .header > ul > li:first-child { float: left; }
+body .mm-dropdown.dropdown-user-bar { width: auto; }
+body .navbar-nav > li > ul.dropdown-menu-sites ul.dropdown-menu-static,
+body .dd-content.select-site .dd-content-in { max-height: 600px; }

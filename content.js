@@ -8,12 +8,13 @@
 
 ;
 (function() {
-    var $, path, href, host, settings;
+    var $, href, host, path, search, settings;
 
-    $ = window.$;
-    path = location.pathname;
-    href = location.href;
-    host = location.host;
+    $        = window.$;
+    href     = location.href;
+    host     = location.host;
+    path     = location.pathname;
+    search   = location.search;
     settings = {};
 
     /**
@@ -170,21 +171,24 @@
      * Moves Campaign Scripts and Mappings out of additional settings.
      */
     function reorderCmpSidebar() {
-        $('#sidebar').find('> ul > li.campaign-settings > ul > li.delimiter > ul > li:not(:first-child)')
+        $('#sidebar')
+            .find('> ul > li.campaign-settings > ul > li.delimiter')
+            .removeClass('selected')
+            .find('> ul > li:not(:first-child)')
             .removeClass('sub-item-l2').addClass('sub-item')
             .insertAfter('#sidebar > ul > li.campaign-settings > ul > li:nth-child(2)');
     }
 
     /**
      * Applies all fixes on corresponding pages.
-     * @param {object} result - Extension settings received from chrome storage.
+     * @param {object} storageData - Extension settings received from chrome storage.
      */
-    function makeLifeBetter(result) {
-        settings = result;
+    function makeLifeBetter(storageData) {
+        settings = storageData;
 
         /* Before document is ready */
         // browser rules, site actions
-        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))$/.test(href)) {
+        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))/.test(path) && !search) {
             settings.moreItems && showMoreItemsPerPage();
         }
 
@@ -194,62 +198,70 @@
             replaceSpinner();
             // campaign builder
             if (/CampaignBuilder/.test(path)) {
+                path = path.replace('CampaignBuilder', '');
+
                 // add new script/action/page/element/variant/segmentRule page
                 if (/Add/.test(path)) {
+                    // add campaign/domain script page
+                    if (/Scripts.Add/.test(path)) {
+                        addDummyScriptBody('//your magic goes here');
+                    }
+                    // add new action/element/script page
+                    if (/(CampaignContent.AddElement)|((DomainActions|Scripts).Add)/.test(path)) {
+                        settings.addDescription && addDescription();
+                    }
+                    // add campaign element/script page
+                    if (/(Campaign.+Add)/.test(path)) {
+                        settings.addNamePrefix && addNamePrefix();
+                    }
+                    // add new site page
+                    if (/DomainLocations.Add/.test(path)) {
+                        // check Overlay option by default
+                        $('#IsOverlay').click();
+                        $('#form0').find('.mm-switcher.disabled').addClass('enabled');
+                        // set page Order to 200 (10-200 - general pages, 200-700 - campaign specific pages, 700-1000 - virtual pages)
+                        $('#ProcessingOrder').val(200).attr('title', '-10 - Site utilities\n  10-200 - Common pages\n  200-700 - Campaign specific pages\n  700-1000 - Virtual pages');
+
+                        settings.addDescription && addDescription();
+                    }
                     focusName();
                 }
-                // add campaign/domain script page
-                if (/Scripts.Add/.test(path)) {
-                    addDummyScriptBody('//your magic goes here');
-                }
-                // add new action/element/script page
-                if (/(CampaignContent.AddElement)|((DomainActions|Scripts).Add)/.test(path)) {
-                    settings.addDescription && addDescription();
-                }
-                // add campaign element/script page
-                if (/(Campaign.+Add)/.test(path)) {
-                    settings.addNamePrefix && addNamePrefix();
-                }
-                // site pages page
-                if (/DomainLocations$/.test(href)) {
-                    settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
-                }
-                // content manager page
-                if (/CampaignContentManager/.test(path)) {
-                    settings.improveCM && improveContentManager();
-                }
-                // add new site page
-                if (/DomainLocations.Add/.test(path)) {
-                    // check Overlay option by default
-                    $('#IsOverlay').click();
-                    $('#form0').find('.mm-switcher.disabled').addClass('enabled');
-                    // set page Order to 200 (10-200 - general pages, 200-700 - campaign specific pages, 700-1000 - virtual pages)
-                    $('#ProcessingOrder').val(200).attr('title', '-10 - Site utilities\n  10-200 - Common pages\n  200-700 - Campaign specific pages\n  700-1000 - Virtual pages');
 
-                    settings.addDescription && addDescription();
-                }
-                // campaign scripts page
-                if (/CampaignScripts/.test(path)) {
-                    // if no scripts add a new one
-                    if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
-                        location.assign($('#MMLink1').attr('href'));
+                // campaign pages
+                if (/Campaign/.test(path)) {
+                    settings.reorderCmpSidebar && reorderCmpSidebar();
+
+                    // content manager page
+                    if (/ContentManager/.test(path)) {
+                        settings.improveCM && improveContentManager();
+                    }
+                    // campaign scripts page
+                    if (/Scripts/.test(path)) {
+                        // if no scripts add a new one
+                        if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
+                            location.assign($('#MMLink1').attr('href'));
+                        }
+                    }
+                    // campaign settings/actions page
+                    if (/Settings|Goals/.test(path)) {
+                        settings.omitActionDetails && omitActionDetails();
                     }
                 }
-                // add/edit action page
-                if (/DomainActions.(Add|Edit)/.test(path)) {
-                    $('#ActionType').on('change', function() {
-                        if (this.value === 'Sales_Amount') {
-                            $('#ActionMultiplier').val('0.01');
-                        }
-                    });
-                }
-                // campaign settings/actions page
-                if (/Campaign(Settings|Goals)/.test(path)) {
-                    settings.omitActionDetails && omitActionDetails();
-                }
-                // campaign settings page
-                if (/CampaignSettings/.test(path)) {
-                    settings.reorderCmpSidebar && reorderCmpSidebar();
+
+                // site pages
+                if (/Domain/.test(path)) {
+                    // site pages page
+                    if (/Locations/.test(path) && !search) {
+                        settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
+                    }
+                    // add/edit action page
+                    if (/Actions.(Add|Edit)/.test(path)) {
+                        $('#ActionType').on('change', function() {
+                            if (this.value === 'Sales_Amount') {
+                                $('#ActionMultiplier').val('0.01');
+                            }
+                        });
+                    }
                 }
             }
             // action log page

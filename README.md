@@ -1,7 +1,7 @@
 # UI-Fixer
 [Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in Maxymiser UI.
 
-Version: 1.24
+Version: 1.25
 
 ## Features
 
@@ -22,6 +22,8 @@ Version: 1.24
 * When adding a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 * When creating action with type "Sales amount" sets value multiplier to 0.01
 * Focuses Name field when you create a new script/action/page/element/variant
+* Increases max-height of site selection dropdown
+* Pulls navbar menu with username right
 
 #### Links
 - [EMEA UI](https://ui61.maxymiser.com/)
