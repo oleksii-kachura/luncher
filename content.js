@@ -167,6 +167,15 @@
     }
 
     /**
+     * Moves Campaign Scripts and Mappings out of additional settings.
+     */
+    function reorderCmpSidebar() {
+        $('#sidebar').find('> ul > li.campaign-settings > ul > li.delimiter > ul > li:not(:first-child)')
+            .removeClass('sub-item-l2').addClass('sub-item')
+            .insertAfter('#sidebar > ul > li.campaign-settings > ul > li:nth-child(2)');
+    }
+
+    /**
      * Applies all fixes on corresponding pages.
      * @param {object} result - Extension settings received from chrome storage.
      */
@@ -237,6 +246,10 @@
                 // campaign settings/actions page
                 if (/Campaign(Settings|Goals)/.test(path)) {
                     settings.omitActionDetails && omitActionDetails();
+                }
+                // campaign settings page
+                if (/CampaignSettings/.test(path)) {
+                    settings.reorderCmpSidebar && reorderCmpSidebar();
                 }
             }
             // action log page

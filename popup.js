@@ -27,6 +27,7 @@
         improveCM:            true,
         omitActionDetails:    true,
         addScriptIfNo:        true,
+        reorderCmpSidebar:    false,
         filterActionLog:      false,
         actionLogFiltersList: ['DATE', 'CAMPAIGN', 'ACTIONS', 'BROWSER']
     };
