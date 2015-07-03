@@ -14,6 +14,7 @@ Version: 1.23
 * Adds current date and author in description
 * On Campaign Actions and Campaign Settings lets you go directly to Edit Action page when you click 'details' link
 * If there are no scripts on Campaign Scripts page adds a new one
+* On Campaign Settings page moves Campaign Scripts and Mappings out of additional settings 
 
 ###### Built-in:
 * Sets Overlay when adding a new site page
