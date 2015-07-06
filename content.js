@@ -139,9 +139,9 @@
     function showMoreItemsPerPage(params) {
         var numberOfItems;
 
-        numberOfItems = settings.numberOfItems || 50;
+        numberOfItems = '' + (settings.numberOfItems || 50);
         params = (params || '?Grid-page=1&Grid-orderBy=~&Grid-filter=~&Grid-size=50').replace(/50/g, numberOfItems);
-        location.assign(href + params);
+        location.replace(href + params);
     }
 
     /**
@@ -220,7 +220,7 @@
                         $('#IsOverlay').click();
                         $('#form0').find('.mm-switcher.disabled').addClass('enabled');
                         // set page Order to 200 (10-200 - general pages, 200-700 - campaign specific pages, 700-1000 - virtual pages)
-                        $('#ProcessingOrder').val(200).attr('title', '-10 - Site utilities\n  10-200 - Common pages\n  200-700 - Campaign specific pages\n  700-1000 - Virtual pages');
+                        $('#ProcessingOrder').val(200).attr('title', '10-200 - Common pages\n200-700 - Campaign specific pages\n700-1000 - Virtual pages');
 
                         settings.addDescription && addDescription();
                     }
