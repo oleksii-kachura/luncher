@@ -188,7 +188,7 @@
 
         /* Before document is ready */
         // browser rules, site actions
-        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))/.test(path) && !search) {
+        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))$/.test(path) && !search) {
             settings.moreItems && showMoreItemsPerPage();
         }
 
@@ -251,7 +251,7 @@
                 // site pages
                 if (/Domain/.test(path)) {
                     // site pages page
-                    if (/Locations/.test(path) && !search) {
+                    if (/Locations$/.test(path) && !search) {
                         settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
                     }
                     // add/edit action page
