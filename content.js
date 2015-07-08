@@ -172,7 +172,10 @@
      */
     function reorderCmpSidebar() {
         $('#sidebar')
-            .find('> ul > li.campaign-settings > ul > li.delimiter')
+            .find('> ul > li.domain-settings')
+            .addClass('selected')
+            .parent()
+            .find('> li.campaign-settings > ul > li.delimiter')
             .removeClass('selected')
             .find('> ul > li:not(:first-child)')
             .removeClass('sub-item-l2').addClass('sub-item')
@@ -239,7 +242,7 @@
                     if (/Scripts/.test(path)) {
                         // if no scripts add a new one
                         if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
-                            location.assign($('#MMLink1').attr('href'));
+                            location.assign(href + '/Add');
                         }
                     }
                     // campaign settings/actions page
