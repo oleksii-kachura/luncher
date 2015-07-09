@@ -4,12 +4,12 @@
 <div class="wrapper">
     <div>
         <button class="settings-save right">Save</button>
-        <span class="notification right">Settings saved!</span>
+        <span class="notification right"></span>
     </div>
 
     <section>
         <input id="settings-autoLogin" type="checkbox"/>
-        <label for="settings-autoLogin">Autologin</label>
+        <label for="settings-autoLogin" title="Credentials will be stored in Chrome storage, not sure how safe it is">Autologin</label>
         <div>
             <input id="settings-sameForAll" type="checkbox"/>
             <label for="settings-sameForAll">Same for all environments</label>
@@ -39,12 +39,12 @@
 
     <section>
         <input id="settings-addDescription" type="checkbox"/>
-        <label for="settings-addDescription">Add date and author in description</label>
+        <label for="settings-addDescription" title="Format: 8.07.2015 by John Doe">Add date and author in description</label>
     </section>
 
     <section>
         <input id="settings-addNamePrefix" type="checkbox"/>
-        <label for="settings-addNamePrefix">Add Campaign prefix to script/element name</label>
+        <label for="settings-addNamePrefix" title="Format: T31_">Add Campaign prefix to script/element name</label>
     </section>
 
     <section>
@@ -54,17 +54,17 @@
 
     <section>
         <input id="settings-omitActionDetails" type="checkbox"/>
-        <label for="settings-omitActionDetails" title="Go directly to Edit Action page">Omit Campaign Action Details page</label>
+        <label for="settings-omitActionDetails" title="Action Details page seems to be useless so it will go to Edit Action page instead">Omit Action Details page</label>
     </section>
 
     <section>
         <input id="settings-addScriptIfNo" type="checkbox"/>
-        <label for="settings-addScriptIfNo">If no Campaign scripts then add a new one</label>
+        <label for="settings-addScriptIfNo" title="Redirect from Campaign Scripts page to Add Script if the list of existing scripts is empty">If no Campaign scripts then add a new one</label>
     </section>
 
     <section>
         <input id="settings-reorderCmpSidebar" type="checkbox"/>
-        <label for="settings-reorderCmpSidebar" title="Moves Campaign Scripts and Mappings out of additional settings">Reorder Campaign sidebar</label>
+        <label for="settings-reorderCmpSidebar" title="Moves Campaign Scripts and Mappings out of Additional Settings and expand Site Settings">Reorder Campaign sidebar</label>
     </section>
 
     <section>

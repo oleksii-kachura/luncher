@@ -20,5 +20,5 @@ section > div > input:first-child:checked + label ~ div:nth-last-child(3) > a,
 section > div > input:first-child:checked + label ~ div:last-child,
 section > div > input:first-child:checked + label ~ div:nth-last-child(2) { display: none; }
 
-.notification { display: none; margin-left: 5px; color: #00C665; }
+.notification { display: none; margin-left: 5px; }
 .notification.right { margin-right: 5px; }

@@ -64,11 +64,12 @@
     /**
      * Show notification in popup.
      * @param {string} message
+     * @param {string} color - CSS property color, green by default.
      */
-    function notify(message) {
+    function notify(message, color) {
         var $notification;
         $notification = $('.notification');
-        $notification.text(message).fadeIn(80);
+        $notification.css({color:color||'#00C665'}).text(message).fadeIn(80);
         $('button').on('blur', function() { $notification.fadeOut(100); });
     }
 
@@ -114,7 +115,7 @@
     function resetChanges() {
         updateStorage(defaultSettings);
         updateView(defaultSettings);
-        notify("Settings reset to default");
+        notify("Settings reset to default", 'orange');
     }
 
     /**
