@@ -17,7 +17,6 @@ Version: 1.29
 * On Campaign Settings page moves Campaign Scripts and Mappings out of additional settings 
 
 ###### Built-in:
-* Sets Overlay when adding a new site page
 * Replaces spinner gif to have transparent background
 * When adding a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 * When creating action with type "Sales amount" sets value multiplier to 0.01
