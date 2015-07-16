@@ -90,12 +90,14 @@
     function alternativeDocTitle() {
         var $title, title, prefix, postfix;
 
-        $title = $('head title');
-        title = $title.text().replace('Site', '');
-        prefix = getCampaignPrefix();
-        postfix = getClientName();
-        prefix && (title = title.replace('Campaign ', ''));
-        $title.text((prefix ? prefix + ' ' : '') + title + (postfix ? ' | ' + postfix : ''));
+        setTimeout(function() {
+            $title = $('head title');
+            title = $title.text().replace('Site', '');
+            prefix = getCampaignPrefix();
+            postfix = getClientName();
+            prefix && (title = title.replace('Campaign ', ''));
+            $title.text((prefix ? prefix + ' ' : '') + title + (postfix ? ' | ' + postfix : ''));
+        }, 2000);
     }
 
     /**
@@ -343,7 +345,7 @@
                 settings.autoLogin && autoLogin();
             }
 
-            settings.alternativeDocTitle && setTimeout(alternativeDocTitle, 2000);
+            settings.alternativeDocTitle && alternativeDocTitle();
         });
     }
 
