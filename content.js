@@ -183,19 +183,6 @@
     }
 
     /**
-     * Sets order of a new page.
-     * 10-200 - general pages
-     * 200-700 - campaign specific pages
-     * 700-1000 - virtual pages
-     */
-    function setPageOrder(order) {
-        var $order;
-
-        $order = $('#ProcessingOrder');
-        $order.val() === "0" && $order.val(order).attr('title', '10-200 - Common pages\n200-700 - Campaign specific pages\n700-1000 - Virtual pages');
-    }
-
-    /**
      * Applies all fixes on corresponding pages.
      * @param {object} storageData - Extension settings received from chrome storage.
      */
@@ -232,7 +219,7 @@
                     }
                     // add new site page
                     if (/DomainLocations.Add/.test(path)) {
-                        setPageOrder(200);
+                        $('#ProcessingOrder').attr('title', '10-200 - Common pages\n200-700 - Campaign specific pages\n700-1000 - Virtual pages');
                         settings.addDescription && addDescription();
                     }
                     focusName();
