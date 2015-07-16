@@ -1,7 +1,7 @@
 # UI-Fixer
 [Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in Maxymiser UI.
 
-Version: 1.29
+Version: 1.30
 
 ## Features
 
@@ -14,7 +14,8 @@ Version: 1.29
 * Adds current date and author in description
 * On Campaign Actions and Campaign Settings lets you go directly to Edit Action page when you click 'details' link
 * If there are no scripts on Campaign Scripts page adds a new one
-* On Campaign Settings page moves Campaign Scripts and Mappings out of additional settings 
+* On Campaign Settings page moves Campaign Scripts and Mappings out of additional settings
+* Alternative document title option adds Campaign prefix and client name to the title tag
 
 ###### Built-in:
 * Replaces spinner gif to have transparent background

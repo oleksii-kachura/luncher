@@ -10,7 +10,7 @@
 (function() {
     var $, defaultSettings, newSettings;
 
-    $               = window.$;
+    $ = window.$;
     defaultSettings = {
         autoLogin:            false,
         sameForAll:           false,
@@ -28,6 +28,7 @@
         omitActionDetails:    true,
         addScriptIfNo:        true,
         reorderCmpSidebar:    true,
+        alternativeDocTitle:  true,
         filterActionLog:      false,
         actionLogFiltersList: ['DATE', 'CAMPAIGN', 'ACTIONS', 'BROWSER']
     };
