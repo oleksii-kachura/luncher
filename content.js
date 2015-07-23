@@ -78,7 +78,7 @@
     function getCampaignPrefix() {
         var $elem, prefix;
 
-        $elem =  $('#main .breadcrumb .mm-name span, #main .mm-content .mm-campaign-name.campaign-name span.overflow-tooltip');
+        $elem =  $('#main .breadcrumb .mm-name span, #main .mm-campaign-name span.overflow-tooltip');
         if (!$elem.length) { return ''; }
         prefix = $elem.eq(0).text().match(/(M?T|CID)\d+/, '')[0];
         return prefix || '';
