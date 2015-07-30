@@ -18,6 +18,7 @@ Version: 1.32
 * Alternative document title option adds Campaign prefix and client name to the title tag
 
 ###### Built-in:
+* Adds a possibility to filter some select options
 * Replaces spinner gif to have transparent background
 * When adding a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 * When creating action with type "Sales amount" sets value multiplier to 0.01
