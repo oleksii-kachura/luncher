@@ -29,6 +29,7 @@
         addScriptIfNo:        true,
         reorderCmpSidebar:    true,
         alternativeDocTitle:  true,
+        addFilterInput:       true,
         filterActionLog:      false,
         actionLogFiltersList: ['DATE', 'CAMPAIGN', 'ACTIONS', 'BROWSER']
     };

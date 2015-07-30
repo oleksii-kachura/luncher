@@ -1,7 +1,7 @@
 # UI-Fixer
 [Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in Maxymiser UI.
 
-Version: 1.32
+Version: 1.33
 
 ## Features
 
@@ -16,9 +16,9 @@ Version: 1.32
 * If there are no scripts on Campaign Scripts page adds a new one
 * On Campaign Settings page moves Campaign Scripts and Mappings out of additional settings
 * Alternative document title option adds Campaign prefix and client name to the title tag
+* Adds a possibility to filter options in selects on pages like Mappings, Campaign Pages/Actions
 
 ###### Built-in:
-* Adds a possibility to filter some select options
 * Replaces spinner gif to have transparent background
 * When adding a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 * When creating action with type "Sales amount" sets value multiplier to 0.01
