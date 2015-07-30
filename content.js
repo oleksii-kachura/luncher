@@ -78,7 +78,7 @@
     function getCampaignPrefix() {
         var $elem, prefix;
 
-        $elem =  $('#main .breadcrumb .mm-name span, #main .mm-campaign-name span.overflow-tooltip');
+        $elem = $('#main .breadcrumb .mm-name span, #main .mm-campaign-name span.overflow-tooltip');
         if (!$elem.length) { return ''; }
         prefix = $elem.eq(0).text().match(/(M?T|CID)\d+/, '')[0];
         return prefix || '';
@@ -238,6 +238,36 @@
     }
 
     /**
+     * Adds an input next to select which lets filter options
+     */
+    function addFilterInput() {
+        var $select = $('#SelectedLocation, #ActionId').eq(0);
+
+        !function($input) {
+            return $select.each(function() {
+                var options = [];
+                $select.find('option').each(function() {
+                    options.push({value: $(this).val(), text: $(this).text()});
+                });
+                $select.data('options', options);
+                $input.bind('change keyup', function() {
+                    var options = $select.empty().data('options');
+                    var search = $.trim($(this).val());
+                    var regex = new RegExp(search, 'gi');
+                    $.each(options, function(i) {
+                        var option = options[i];
+                        if(option.text.match(regex) !== null) {
+                            $select.append(
+                                $('<option>').text(option.text).val(option.value)
+                            );
+                        }
+                    });
+                });
+            });
+        }($('<input type="text" class="filter-options" placeholder="Filter options">').insertAfter($select));
+    }
+
+    /**
      * Applies all fixes on corresponding pages.
      * @param {object} storageData - Extension settings received from chrome storage.
      */
@@ -284,6 +314,10 @@
                 if (/Campaign/.test(path)) {
                     settings.reorderCmpSidebar && reorderCmpSidebar();
 
+                    // content manager page
+                    if (/Locations|Goals/.test(path)) {
+                        addFilterInput();
+                    }
                     // content manager page
                     if (/ContentManager/.test(path)) {
                         settings.improveCM && improveContentManager();
