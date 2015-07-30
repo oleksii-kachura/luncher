@@ -2,10 +2,8 @@
   "manifest_version": 2,
   "name": "UI fixer",
   "version": "1.32",
+
   "description": "Customize your Maxymiser UI experience",
-
-  "permissions": ["tabs", "storage"],
-
   "icons": {"16": "img/icon16.png", "48": "img/icon48.png", "128": "img/icon128.png"},
 
   "page_action": {
@@ -13,8 +11,11 @@
     "default_title": "UI fixer",
     "default_popup": "popup.html"
   },
-  "web_accessible_resources": ["img/spinner.gif"],
 
+  "author": "Alex Kachura",
+  "background": {
+    "scripts" : ["background.js"]
+  },
   "content_scripts": [
     {
       "matches": ["*://ui61.maxymiser.com/*", "*://ui61us.maxymiser.com/*", "*://demo.maxymiser.org/*"],
@@ -23,8 +24,6 @@
       "run_at":  "document_start"
     }
   ],
-
-  "background": {
-    "scripts" : ["background.js"]
-  }
+  "permissions": ["tabs", "storage"],
+  "web_accessible_resources": ["img/spinner.gif"]
 }
