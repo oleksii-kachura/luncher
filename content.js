@@ -314,7 +314,7 @@
                 if (/Campaign/.test(path)) {
                     settings.reorderCmpSidebar && reorderCmpSidebar();
 
-                    // content manager page
+                    // campaign pages/actions
                     if (/Locations|Goals/.test(path)) {
                         addFilterInput();
                     }
