@@ -6,5 +6,5 @@ body .navbar-nav > li > ul.dropdown-menu-sites ul.dropdown-menu-static,
 body .dd-content.select-site .dd-content-in { max-height: 600px; }
 body .dd-content.select-test-cont .dd-content-in { max-height: 520px; }
 #main form td[width="200"] { width: auto; }
-body input.filter-options { border-right: 0; width: 49px; }
-.filter-options + select { border-left: 0; width: 170px; }
+body input.filter-options { border-right: 0; width: 50px; box-sizing: border-box; }
+.filter-options + select { border-left: 0; width: 180px; box-sizing: border-box; }
