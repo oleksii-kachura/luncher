@@ -230,10 +230,10 @@
     function addFilterInput() {
         $('#SelectedLocation, #ActionId, #LocationId, #ObjectId').each(function() {
             var $input, $select, options;
-            $input = $('<input type="text" class="filter-options" placeholder="Filter">');
+            $input = $('<input type="text" class="filter-options" placeholder="Filter" title="RegExp">');
             $select = $(this);
             options = [];
-            $input.insertAfter($select);
+            $input.insertBefore($select);
             $select.find('option').each(function() {
                 options.push({value: $(this).val(), text: $(this).text()});
             });
