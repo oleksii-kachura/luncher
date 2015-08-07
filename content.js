@@ -77,7 +77,7 @@
         var $elem, prefix;
         $elem = $('#main .breadcrumb .mm-name span, #main .mm-campaign-name span.overflow-tooltip');
         if (!$elem.length) { return ''; }
-        prefix = $elem.eq(0).text().match(/(M?T|CID)\d+/, '')[0];
+        prefix = $elem.eq(0).text().match(/(M?T|CID|PC|VCB)\d*/, '')[0];
         return prefix || '';
     }
 
@@ -241,15 +241,15 @@
             $input.bind('change keyup', function() {
                 var options, regex;
                 options = $select.empty().data('options');
-                regex = new RegExp($(this).val(), 'gi');
-                $.each(options, function(i) {
-                    var option = options[i];
-                    if(option.text.match(regex) !== null) {
-                        $select.append(
-                            $('<option>').text(option.text).val(option.value)
-                        );
-                    }
-                });
+                try {
+                    regex = new RegExp($(this).val(), 'gi');
+                    $.each(options, function(i) {
+                        var option = options[i];
+                        if (option.text.match(regex) !== null) {
+                            $select.append($('<option>').text(option.text).val(option.value));
+                        }
+                    });
+                } catch (e) {}
             });
         });
     }
@@ -261,13 +261,11 @@
     function makeLifeBetter(storageData) {
         settings = storageData;
 
-        /* Before document is ready */
         // browser rules, site actions
         if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))$/.test(path) && !search) {
             settings.moreItems && showMoreItemsPerPage();
         }
 
-        /* After document is ready */
         $(document).ready(function() {
             // common
             replaceSpinner();
