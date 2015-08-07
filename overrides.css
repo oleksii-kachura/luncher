@@ -8,3 +8,4 @@ body .dd-content.select-test-cont .dd-content-in { max-height: 520px; }
 #main form td[width="200"] { width: auto; }
 body input.filter-options { border-right: 0; width: 50px; box-sizing: border-box; }
 .filter-options + select { border-left: 0; width: 180px; box-sizing: border-box; }
+body .b-mm-edit-campaign-script__wrong-name-tipsy { margin: 2px 0 0 -3px; }

@@ -17,6 +17,130 @@
     search   = location.search;
     settings = {};
 
+    chrome.storage.sync.get(null, makeLifeBetter);
+
+    /**
+     * Applies all fixes on corresponding pages.
+     * @param {object} storageData - Extension settings received from chrome storage.
+     */
+    function makeLifeBetter(storageData) {
+        settings = storageData;
+
+        // browser rules, site actions
+        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))$/.test(path) && !search) {
+            settings.moreItems && showMoreItemsPerPage();
+        }
+
+        $(document).ready(function() {
+            // common
+            replaceSpinner();
+            // campaign builder
+            if (/CampaignBuilder/.test(path)) {
+                path = path.replace('CampaignBuilder', '');
+
+                // add new script/action/page/element/variant/segmentRule page
+                if (/Add/.test(path)) {
+                    // add campaign/domain script page
+                    if (/Scripts.Add/.test(path)) {
+                        addDummyScriptBody('//your magic goes here');
+                    }
+                    // add new action/element/script page
+                    if (/(CampaignContent.AddElement)|((DomainActions|Scripts).Add)/.test(path)) {
+                        settings.addDescription && addDescription();
+                    }
+                    // add campaign element/script page
+                    if (/(Campaign.+Add)/.test(path)) {
+                        settings.addNamePrefix && addNamePrefix();
+                    }
+                    // add new site page
+                    if (/DomainLocations.Add/.test(path)) {
+                        $('#ProcessingOrder').attr('title', '10-200 - Common pages\n200-700 - Campaign specific pages\n700-1000 - Virtual pages');
+                        settings.addDescription && addDescription();
+                    }
+                    focusName();
+                }
+
+                // campaign pages
+                if (/Campaign/.test(path)) {
+                    settings.reorderCmpSidebar && reorderCmpSidebar();
+
+                    // campaign pages/actions/mappings
+                    if (/Locations|Goals|Mappings/.test(path)) {
+                        settings.addFilterInput && addFilterInput();
+                    }
+                    // content manager page
+                    if (/ContentManager/.test(path)) {
+                        settings.improveCM && improveContentManager();
+                    }
+                    // campaign scripts page
+                    if (/Scripts/.test(path)) {
+                        // if no scripts add a new one
+                        if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
+                            location.assign(href + '/Add');
+                        }
+                    }
+                    // campaign settings/actions page
+                    if (/Settings|Goals/.test(path)) {
+                        settings.omitActionDetails && omitActionDetails();
+                    }
+                    // campaign add script page
+                    if (/Scripts.Add/.test(path)) {
+                        watchNameLength();
+                    }
+                }
+
+                // site pages
+                if (/Domain/.test(path)) {
+                    // site pages page
+                    if (/Locations$/.test(path) && !search) {
+                        settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
+                    }
+                    // site mappings
+                    if (/Mappings/.test(path)) {
+                        settings.addFilterInput && addFilterInput();
+                    }
+                    // add/edit action page
+                    if (/Actions.(Add|Edit)/.test(path)) {
+                        $('#ActionType').on('change', function() {
+                            if (this.value === 'Sales_Amount') {
+                                $('#ActionMultiplier').val('0.01');
+                            }
+                        });
+                    }
+                }
+            }
+            // admin pages
+            if (/Admin/.test(path)) {
+                // action log page
+                if (/ActionLog/.test(path)) {
+                    if (settings.moreItems) {
+                        $('#bRefresh, #bApply').click(showMoreItemsPerPageDOM);
+                    }
+                    if (settings.filterActionLog) {
+                        setTimeout(function() {
+                            // set flags
+                            $.each($('#CheckBoxes').find('input'), function(id, checkbox) {
+                                id = $(checkbox).attr('id');
+                                if ($(checkbox).prop('checked') != !!(settings.actionLogFiltersList.indexOf(id) + 1)) {
+                                    $($('#' + id)).click();
+                                }
+                            });
+                            // apply flags
+                            $('#bApply').click();
+                        }, 750);
+                    }
+                }
+                settings.alternativeDocTitle = false;
+            }
+            // login page
+            if (/Auth.Login/.test(path)) {
+                settings.autoLogin && autoLogin();
+            }
+
+            settings.alternativeDocTitle && alternativeDocTitle();
+        });
+    }
+
     /**
      * Detects current environment.
      * @returns {string} - Empty string | 'US' | 'Demo'
@@ -150,7 +274,7 @@
         setTimeout(function() {
             e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name, #b-mm-edit-variant__variant-name').eq(0);
             e.length && e.focus();
-        }, 900);
+        }, 1200);
     }
 
     /**
@@ -254,124 +378,26 @@
         });
     }
 
-    /**
-     * Applies all fixes on corresponding pages.
-     * @param {object} storageData - Extension settings received from chrome storage.
-     */
-    function makeLifeBetter(storageData) {
-        settings = storageData;
-
-        // browser rules, site actions
-        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))$/.test(path) && !search) {
-            settings.moreItems && showMoreItemsPerPage();
-        }
-
-        $(document).ready(function() {
-            // common
-            replaceSpinner();
-            // campaign builder
-            if (/CampaignBuilder/.test(path)) {
-                path = path.replace('CampaignBuilder', '');
-
-                // add new script/action/page/element/variant/segmentRule page
-                if (/Add/.test(path)) {
-                    // add campaign/domain script page
-                    if (/Scripts.Add/.test(path)) {
-                        addDummyScriptBody('//your magic goes here');
+    function watchNameLength() {
+        var $input, $wrapper, length;
+        setTimeout(function() {
+            $input = $('#b-mm-edit-campaign-script__campaign-script-name');
+            $input.bind('change keyup', function() {
+                length = $input.val().length;
+                $wrapper = $('.b-mm-edit-campaign-script__wrong-name-tipsy');
+                $wrapper.length && $wrapper.attr('id', 'validation-wrapper');
+                $wrapper = $('#validation-wrapper');
+                if (length > 20) {
+                    if ($wrapper.length) {
+                        $wrapper.addClass('b-mm-edit-campaign-script__wrong-name-tipsy')
+                    } else {
+                        $('.b-mm-edit-campaign-script__campaign-script-name-container').append('<div id="validation-wrapper" class="b-mm-edit-campaign-script__wrong-name-tipsy"><i class="b-mm-edit-campaign-script__wrong-field-error-icon" original-title="Length of the Campaign Script name must be between 1 and 20 characters."></i></div>');
+                        $input.insertBefore($('i.b-mm-edit-campaign-script__wrong-field-error-icon')).focus();
                     }
-                    // add new action/element/script page
-                    if (/(CampaignContent.AddElement)|((DomainActions|Scripts).Add)/.test(path)) {
-                        settings.addDescription && addDescription();
-                    }
-                    // add campaign element/script page
-                    if (/(Campaign.+Add)/.test(path)) {
-                        settings.addNamePrefix && addNamePrefix();
-                    }
-                    // add new site page
-                    if (/DomainLocations.Add/.test(path)) {
-                        $('#ProcessingOrder').attr('title', '10-200 - Common pages\n200-700 - Campaign specific pages\n700-1000 - Virtual pages');
-                        settings.addDescription && addDescription();
-                    }
-                    focusName();
+                } else if ($wrapper.length) {
+                    $wrapper.removeClass('b-mm-edit-campaign-script__wrong-name-tipsy')
                 }
-
-                // campaign pages
-                if (/Campaign/.test(path)) {
-                    settings.reorderCmpSidebar && reorderCmpSidebar();
-
-                    // campaign pages/actions/mappings
-                    if (/Locations|Goals|Mappings/.test(path)) {
-                        settings.addFilterInput && addFilterInput();
-                    }
-                    // content manager page
-                    if (/ContentManager/.test(path)) {
-                        settings.improveCM && improveContentManager();
-                    }
-                    // campaign scripts page
-                    if (/Scripts/.test(path)) {
-                        // if no scripts add a new one
-                        if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
-                            location.assign(href + '/Add');
-                        }
-                    }
-                    // campaign settings/actions page
-                    if (/Settings|Goals/.test(path)) {
-                        settings.omitActionDetails && omitActionDetails();
-                    }
-                }
-
-                // site pages
-                if (/Domain/.test(path)) {
-                    // site pages page
-                    if (/Locations$/.test(path) && !search) {
-                        settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
-                    }
-                    // site mappings
-                    if (/Mappings/.test(path)) {
-                        settings.addFilterInput && addFilterInput();
-                    }
-                    // add/edit action page
-                    if (/Actions.(Add|Edit)/.test(path)) {
-                        $('#ActionType').on('change', function() {
-                            if (this.value === 'Sales_Amount') {
-                                $('#ActionMultiplier').val('0.01');
-                            }
-                        });
-                    }
-                }
-            }
-            // admin pages
-            if (/Admin/.test(path)) {
-                // action log page
-                if (/ActionLog/.test(path)) {
-                    if (settings.moreItems) {
-                        $('#bRefresh, #bApply').click(showMoreItemsPerPageDOM);
-                    }
-                    if (settings.filterActionLog) {
-                        setTimeout(function() {
-                            // set flags
-                            $.each($('#CheckBoxes').find('input'), function(id, checkbox) {
-                                id = $(checkbox).attr('id');
-                                if ($(checkbox).prop('checked') != !!(settings.actionLogFiltersList.indexOf(id) + 1)) {
-                                    $($('#' + id)).click();
-                                }
-                            });
-                            // apply flags
-                            $('#bApply').click();
-                        }, 750);
-                    }
-                }
-                settings.alternativeDocTitle = false;
-            }
-            // login page
-            if (/Auth.Login/.test(path)) {
-                settings.autoLogin && autoLogin();
-            }
-
-            settings.alternativeDocTitle && alternativeDocTitle();
-        });
+            });
+        }, 1200);
     }
-
-    /* Run *************************************/
-    chrome.storage.sync.get(null, makeLifeBetter);
 })();
