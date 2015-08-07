@@ -19,6 +19,7 @@ Version: 1.36
 * Adds a possibility to filter options in selects on pages like Mappings, Campaign Pages/Actions
 
 ###### Built-in:
+* Adds a watcher for script name length on Add Campaign Script page
 * Replaces spinner gif to have transparent background
 * When adding a new script adds some dummy code to Script field in order to prevent validation error when saving with blank script body
 * When creating action with type "Sales amount" sets value multiplier to 0.01
