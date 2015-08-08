@@ -1,6 +1,6 @@
 ::-webkit-scrollbar{ width: 0; }
 
-body { margin: 0; padding: 10px; width: 270px; }
+body { margin: 0; padding: 10px; width: 300px; }
 ul { list-style: none; padding: 0; }
 
 .right { float: right;  }
@@ -10,9 +10,10 @@ section + section { margin-top: 10px; }
 section input[type="checkbox"] { margin-left: 0; vertical-align: text-top; }
 
 section > input:first-child + label ~ * { display: none; }
-section > input:first-child:checked + label ~ * { display: block; margin: 5px 0 0 20px; width: 250px; }
+section > input:first-child:checked + label ~ * { display: block; margin: 5px 0 0 20px; width: 93.4%; }
+section textarea { min-height: 38px; }
 
-section > div > div * { display: block; margin: 5px 0 0 0; width: 250px; }
+section > div > div * { display: block; margin: 5px 0 0 0; width: 100%; }
 section > div > div > a { color: black; text-align: center; text-decoration: none; }
 section > div > div > a:hover { background-color: #f4f4f4; }
 

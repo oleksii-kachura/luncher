@@ -42,7 +42,7 @@
                 if (/Add/.test(path)) {
                     // add campaign/domain script page
                     if (/Scripts.Add/.test(path)) {
-                        addDummyScriptBody('//your magic goes here');
+                        settings.addScriptBody && addScriptBody(settings.scriptBody);
                     }
                     // add new action/element/script page
                     if (/(CampaignContent.AddElement)|((DomainActions|Scripts).Add)/.test(path)) {
@@ -94,6 +94,13 @@
                     // site pages page
                     if (/Locations$/.test(path) && !search) {
                         settings.moreItems && !$('#Url').val() && showMoreItemsPerPage('?GridLocations-page=1&GridLocations-orderBy=~&GridLocations-filter=~&GridLocations-size=50');
+                    }
+                    // site scripts page
+                    if (/Scripts/.test(path)) {
+                        // if no scripts add a new one
+                        if (settings.addScriptIfNo && $('#Grid').find('.t-no-data').length) {
+                            location.assign(href + '/Add');
+                        }
                     }
                     // site mappings
                     if (/Mappings/.test(path)) {
@@ -221,6 +228,23 @@
     }
 
     /**
+     * Gets user name.
+     * @returns {string}
+     */
+    function getUserName() {
+        return $('#user_login').find('input.mm-dd-input:eq(0)').val();
+    }
+
+    /**
+     * Gets current date.
+     * @returns {string} Format: "8.12.2015".
+     */
+    function getDate() {
+        var d = (new Date).toLocaleString('pl');
+        return d.substring(0, d.indexOf(','));
+    }
+
+    /**
      * Adds campaign prefix to the name of script/element.
      */
     function addNamePrefix() {
@@ -238,10 +262,10 @@
     function addDescription() {
         var d, f, b, v;
         setTimeout(function() {
-            d = (new Date).toLocaleString('pl');
-            f = $('#user_login').find('input.mm-dd-input:eq(0)').val();
+            d = getDate();
+            f = getUserName();
             b = $('#Description, #description, #descr-textarea-id');
-            v = d.substring(0, d.indexOf(',')) + ' by ' + f + '\n';
+            v = d + ' by ' + f + '\n';
             b.length && !b.val() && b.val(v);
         }, 900);
     }
@@ -249,8 +273,27 @@
     /**
      * Adds some dummy code to script field in order to prevent validation error when you save script with blank body.
      */
-    function addDummyScriptBody(code) {
-        var $highlight, $script;
+    function addScriptBody(code) {
+        var $highlight, $script, name, email, date;
+        if (!code) {
+            date  = getDate() || '[date]';
+            name  = getUserName() || '[name]';
+            email = settings['login' + detectEnvironment()];
+            if (!email || email == '@maxymiser.com') { email = '[email]'; }
+            code =
+                "/**\n" +
+                " * [script name]\n" +
+                " * This script's purpose is to [check generation rules, track actions, e.t.c].\n" +
+                " *\n" +
+                " * @author " + name + " " + email + "\n" +
+                " * @date " + date + "\n" +
+                " */\n" +
+                "    \n" +
+                ";\n" +
+                "(function() {\n" +
+                "    \n" +
+                "})(); ";
+        }
         setTimeout(function() {
             $highlight = $('#heightlight_button, #codeHighlight').eq(0);
             $script = $('#script, #Script');
@@ -274,7 +317,7 @@
         setTimeout(function() {
             e = $('#Name, #b-mm-edit-campaign-script__campaign-script-name, #b-mm-edit-variant__variant-name').eq(0);
             e.length && e.focus();
-        }, 1200);
+        }, 1300);
     }
 
     /**

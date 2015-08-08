@@ -22,8 +22,10 @@
         passwordDemo:         '',
         moreItems:            true,
         numberOfItems:        50,
-        addDescription:       true,
         addNamePrefix:        true,
+        addDescription:       true,
+        addScriptBody:        true,
+        scriptBody:           '',
         improveCM:            true,
         omitActionDetails:    true,
         addScriptIfNo:        true,
@@ -79,10 +81,8 @@
      * Saves settings from the popup to chrome storage.
      */
     function saveChanges() {
-        var $element, $notification, settings;
-
-        $notification = $('.notification');
-        settings      = {};
+        var $element;
+        var settings = {};
 
         $.each(defaultSettings, function(key, value) {
             $element = $('#settings-' + key);
