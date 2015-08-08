@@ -21,7 +21,7 @@
         loginDemo:            '@maxymiser.com',
         passwordDemo:         '',
         moreItems:            true,
-        numberOfItems:        50,
+        numberOfItems:        100,
         addNamePrefix:        true,
         addDescription:       true,
         addScriptBody:        true,
