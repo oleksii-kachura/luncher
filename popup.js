@@ -36,6 +36,9 @@
         actionLogFiltersList: ['DATE', 'CAMPAIGN', 'ACTIONS', 'BROWSER']
     };
 
+    // retrieve settings from chrome storage and initiate popup
+    chrome.storage.sync.get(null, initPopup);
+
     /**
      * Updates chrome storage.
      * @param {object} settings - Can include up to 512 properties.
@@ -174,9 +177,4 @@
             representationBlock();
         });
     }
-
-    /* Run *******************************************************/
-
-    // retrieve settings from chrome storage and launch popup logic
-    chrome.storage.sync.get(null, initPopup);
 })();
