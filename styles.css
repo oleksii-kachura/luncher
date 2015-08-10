@@ -11,7 +11,7 @@ section input[type="checkbox"] { margin-left: 0; vertical-align: text-top; }
 
 section > input:first-child + label ~ * { display: none; }
 section > input:first-child:checked + label ~ * { display: block; margin: 5px 0 0 20px; width: 93.4%; }
-section textarea { min-height: 38px; }
+section textarea { min-height: 38px; height: 21px; }
 
 section > div > div * { display: block; margin: 5px 0 0 0; width: 100%; }
 section > div > div > a { color: black; text-align: center; text-decoration: none; }
@@ -24,9 +24,4 @@ section > div > input:first-child:checked + label ~ div:nth-last-child(2) { disp
 .notification { display: none; margin-left: 5px; }
 .notification.right { margin-right: 5px; }
 
-#settings-actionLogFiltersList ul {
-    display: inline-block;
-    width: 46.7%;
-    height: 21px;
-    vertical-align: top;
-}
+#settings-actionLogFiltersList ul { display: inline-block; width: 46.7%; vertical-align: top; }
