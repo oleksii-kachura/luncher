@@ -118,9 +118,7 @@
             if (/Admin/.test(path)) {
                 // action log page
                 if (/ActionLog/.test(path)) {
-                    if (settings.moreItems) {
-                        $('#bRefresh, #bApply').click(showMoreItemsPerPageDOM);
-                    }
+                    settings.moreItems && $('#bRefresh, #bApply').click(showMoreItemsPerPageDOM);
                     if (settings.filterActionLog) {
                         setTimeout(function() {
                             // set flags
@@ -290,7 +288,7 @@
                 ";\n" +
                 "(function() {\n" +
                 "    \n" +
-                "})(); ";
+                "})();";
         }
         setTimeout(function() {
             $highlight = $('#heightlight_button, #codeHighlight').eq(0);
