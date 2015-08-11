@@ -8,14 +8,12 @@
 
 ;
 (function() {
-    var $, href, host, path, search, settings;
-
-    $        = window.$;
-    href     = location.href;
-    host     = location.host;
-    path     = location.pathname;
-    search   = location.search;
-    settings = {};
+    var $        = window.$;
+    var href     = location.href;
+    var host     = location.host;
+    var path     = location.pathname;
+    var search   = location.search;
+    var settings = {};
 
     chrome.storage.sync.get(null, makeLifeBetter);
 
@@ -205,8 +203,8 @@
      * Gets campaign prefix, e.g. 'T31'.
      */
     function getCampaignPrefix() {
-        var $elem, prefix;
-        $elem = $('#main .breadcrumb .mm-name span, #main .mm-campaign-name span.overflow-tooltip');
+        var prefix;
+        var $elem = $('#main .breadcrumb .mm-name span, #main .mm-campaign-name span.overflow-tooltip');
         if (!$elem.length) { return ''; }
         prefix = $elem.eq(0).text().match(/(M?T|CID|PC|VCB)\d*/, '')[0];
         return prefix || '';
@@ -368,9 +366,8 @@
      * Replaces default spinner image to have transparent background.
      */
     function replaceSpinner() {
-        var spinnerURL, $spinner;
-        spinnerURL = chrome.extension.getURL('img/spinner.gif');
-        $spinner = $('#spinner');
+        var spinnerURL = chrome.extension.getURL('img/spinner.gif');
+        var $spinner   = $('#spinner');
         if ($spinner.length) {
             $spinner.attr('src', spinnerURL).css({opacity: 1});
         }
@@ -382,13 +379,12 @@
     function reorderCmpSidebar() {
         $('#sidebar')
             .find('> ul > li.domain-settings')
-            .addClass('selected')
-            .parent()
-            .find('> li.campaign-settings > ul > li.delimiter')
-            .removeClass('selected')
-            .find('> ul > li:not(:first-child)')
-            .removeClass('sub-item-l2').addClass('sub-item')
-            .insertAfter('#sidebar > ul > li.campaign-settings > ul > li:nth-child(2)');
+                .addClass('selected')
+                .parent().find('> li.campaign-settings > ul > li.delimiter')
+                    .removeClass('selected')
+                    .find('> ul > li:not(:first-child)')
+                        .removeClass('sub-item-l2').addClass('sub-item')
+                        .insertAfter('#sidebar > ul > li.campaign-settings > ul > li:nth-child(2)');
     }
 
     /**
@@ -396,10 +392,9 @@
      */
     function addFilterInput() {
         $('#SelectedLocation, #ActionId, #LocationId, #ObjectId').each(function() {
-            var $input, $select, options;
-            $input = $('<input type="text" class="filter-options" placeholder="Filter" title="RegExp">');
-            $select = $(this);
-            options = [];
+            var $input  = $('<input type="text" class="filter-options" placeholder="Filter" title="RegExp">');
+            var $select = $(this);
+            var options = [];
             $input.insertBefore($select);
             $select.find('option').each(function() {
                 options.push({value: $(this).val(), text: $(this).text()});
