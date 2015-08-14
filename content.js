@@ -25,7 +25,7 @@
         settings = storageData;
 
         // browser rules, site actions
-        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|(DomainActions))$/.test(path) && !search) {
+        if (/CampaignBuilder.*(((Campaign|Domain)BrowserRules)|DomainActions|ScriptsMappings)$/.test(path) && !search) {
             settings.moreItems && showMoreItemsPerPage();
         }
 

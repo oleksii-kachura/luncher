@@ -1,13 +1,13 @@
 # UI-Fixer
 [Chrome extension](https://chrome.google.com/webstore/detail/ui-fixer/ocpdnkacigphdkeokobanmcinahdfnpd) that lets you customize a few things in Maxymiser UI.
 
-Version: 1.42
+Version: 1.43
 
 ## Features
 
 ###### Optional:
 * Automatically logs you in
-* Shows more items per page on pages like Browser Rules, Site Pages/Actions (up to 300) and Action Log (50)
+* Shows more items per page on pages like Browser Rules, Site Pages/Actions/ScriptMappings (up to 300) and Action Log (50)
 * Improves Content Manager
 * Customizes pre-selected filters in Action Log
 * Adds campaign prefix when creating a new script or element
