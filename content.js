@@ -335,7 +335,7 @@
         if (settings['login' + env] && settings['password' + env] && !$('.auth-top-messages').text().replace(/\s/g, '').length) {
             $("#Login").val(settings['login' + env]);
             $("#Password").val(settings['password' + env]);
-            $('#Login[type=submit]').click();
+            $('.btn[type="submit"]').click();
         }
     }
 
