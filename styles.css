@@ -23,5 +23,3 @@ section > div > input:first-child:checked + label ~ div:nth-last-child(2) { disp
 
 .notification { display: none; margin-left: 5px; }
 .notification.right { margin-right: 5px; }
-
-#settings-actionLogFiltersList ul { display: inline-block; width: 46.7%; vertical-align: top; }

@@ -1,11 +1,3 @@
-#spinner { height: 24px; padding: 4px 0; opacity: 0; transition: opacity .3s; }
-body .header > ul > li { float: right; }
-body .header > ul > li:first-child { float: left; }
-body .mm-dropdown.dropdown-user-bar { width: auto; }
-body .navbar-nav > li > ul.dropdown-menu-sites ul.dropdown-menu-static,
-body .dd-content.select-site .dd-content-in { max-height: 600px; }
-body .dd-content.select-test-cont .dd-content-in { max-height: 520px; }
-#main form td[width="200"] { width: auto; }
-body input.filter-options { border-right: 0; width: 50px; box-sizing: border-box; }
-.filter-options + select { border-left: 0; width: 180px; box-sizing: border-box; }
-body .b-mm-edit-campaign-script__wrong-name-tipsy { margin: 2px 0 0 -3px; }
+body .navbar .brand { color: #0dc324; text-shadow: 0 0 2px #6bffb0; }
+.container-fluid section thead tr th:last-child,
+.container-fluid section tbody tr td:last-child { display: none; }

@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
-  "name": "UI fixer",
-  "version": "1.44",
+  "name": "Luncher",
+  "version": "0.1",
 
-  "description": "Customize your Maxymiser UI experience",
-  "icons": {"16": "img/icon16.png", "48": "img/icon48.png", "128": "img/icon128.png"},
+  "description": "Auto-order lunch + fixes",
+  "icons": {"16": "img/icon16.png", "48": "img/icon16.png", "128": "img/icon16.png"},
 
   "page_action": {
-    "default_icon":  {"19": "img/icon19.png", "38": "img/icon38.png"},
-    "default_title": "UI fixer",
+    "default_icon":  {"19": "img/icon16.png", "38": "img/icon16.png"},
+    "default_title": "Luncher",
     "default_popup": "popup.html"
   },
 
@@ -17,12 +17,11 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://ui61.maxymiser.com/*", "*://ui61us.maxymiser.com/*", "*://demo.maxymiser.org/*"],
+      "matches": ["*://luncher.codilime.com/*", "*://accounts.google.com/AccountChooser*"],
       "css":     ["overrides.css"],
       "js":      ["jquery.js", "content.js"],
       "run_at":  "document_start"
     }
   ],
-  "permissions": ["tabs", "storage"],
-  "web_accessible_resources": ["img/spinner.gif"]
+  "permissions": ["tabs", "storage"]
 }

@@ -1,43 +1,31 @@
-/**
- * popup.js
- * Logic of extension popup.
- *
- * @author Alex Kachura alex.kachura@maxymiser.com
- * @date 14 May 2015
- */
+'use strict';
 
 ;
-(function() {
-    var $, defaultSettings, newSettings;
-
-    $ = window.$;
-    defaultSettings = {
-        autoLogin:            false,
-        sameForAll:           false,
-        login:                '@maxymiser.com',
-        password:             '',
-        loginUS:              '@maxymiser.com',
-        passwordUS:           '',
-        loginDemo:            '@maxymiser.com',
-        passwordDemo:         '',
-        moreItems:            true,
-        numberOfItems:        100,
-        addNamePrefix:        true,
-        addDescription:       true,
-        addScriptBody:        true,
-        scriptBody:           '',
-        improveCM:            true,
-        omitActionDetails:    true,
-        addScriptIfNo:        true,
-        reorderCmpSidebar:    true,
-        alternativeDocTitle:  true,
-        addFilterInput:       true,
-        filterActionLog:      false,
-        actionLogFiltersList: ['DATE', 'CAMPAIGN', 'ACTIONS', 'BROWSER']
+(function($) {
+    var defaultSettings = {
+        autoOpen: true,
+        autoLogin: false,
+        autoOrder: false
     };
 
     // retrieve settings from chrome storage and initiate popup
     chrome.storage.sync.get(null, initPopup);
+
+    /**
+     * Initializes logic of extension popup.
+     * @param {object} settings - Data received from chrome storage.
+     */
+    function initPopup(settings) {
+        var newSettings = $.extend({}, defaultSettings, settings);
+        updateStorage(newSettings);
+
+        $(document).ready(function() {
+            updateView(newSettings);
+            $('.settings-save').click(saveChanges);
+            $('.settings-reset').click(resetChanges);
+            representationBlock();
+        });
+    }
 
     /**
      * Updates chrome storage.
@@ -61,7 +49,7 @@
      */
     function listenToChanges() {
         chrome.storage.onChanged.addListener(function(changes) {
-            for (key in changes) {
+            for (var key in changes) {
                 var storageChange = changes[key];
                 console.log('%s: %s => %s', key, storageChange.oldValue, storageChange.newValue);
             }
@@ -76,7 +64,7 @@
     function notify(message, color) {
         var $notification;
         $notification = $('.notification');
-        $notification.css({color:color||'#00C665'}).text(message).fadeIn(80);
+        $notification.css({color: color || '#00C665'}).text(message).fadeIn(80);
         $('button').on('blur', function() { $notification.fadeOut(100); });
     }
 
@@ -97,17 +85,6 @@
                 settings[key] = value;
             }
         });
-
-        // validation
-        if (settings.numberOfItems <= 20 || settings.numberOfItems > 300) {
-            settings.numberOfItems = 50;
-        }
-        if (settings.filterActionLog) {
-            settings.actionLogFiltersList = [];
-            $.each($('#settings-actionLogFiltersList').find('input'), function(i, checkbox) {
-                $(checkbox).prop('checked') && settings.actionLogFiltersList.push($(checkbox).attr('id'));
-            });
-        }
 
         updateStorage(settings);
         updateView(settings);
@@ -137,9 +114,6 @@
                     : $element.val(value)
             }
         });
-        $.each(settings.actionLogFiltersList, function(k, id) {
-            $('#' + id).prop('checked', true);
-        });
     }
 
     /**
@@ -156,25 +130,5 @@
      */
     function representationBlock() {
         adjustPopupHeight();
-        $('input[type=checkbox], .settings-reset').click(adjustPopupHeight);
-        $('input[type=password]')
-            .mouseover(function() { !this.value && (this.type = "text"); })
-            .mouseout(function() { this.type = "password"; });
     }
-
-    /**
-     * Initializes logic of extension popup.
-     * @param {object} settings - Data received from chrome storage.
-     */
-    function initPopup(settings) {
-        newSettings = $.extend({}, defaultSettings, settings);
-        updateStorage(newSettings);
-
-        $(document).ready(function() {
-            updateView(newSettings);
-            $('.settings-save').click(saveChanges);
-            $('.settings-reset').click(resetChanges);
-            representationBlock();
-        });
-    }
-})();
+})(window.$);
