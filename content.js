@@ -1,16 +1,23 @@
 'use strict';
 
-;
 (function($) {
     var href = location.href;
 
     chrome.storage.sync.get(null, makeLifeBetter);
 
     function makeLifeBetter(settings) {
+        console.log(settings)
         $(document).ready(function() {
             settings.autoLogin && autoLogin();
-            if (/luncher\.codilime\.com/.test(href)) {
+            if (/luncher\.codilime\.com\/$/.test(href)) {
                 removeDuplicateNumbers();
+            }
+            if (/luncher\.codilime\.com\/lunch\/menu\.html/.test(href)) {
+                if (settings.autoOrder) {
+                    autoOrder(settings);
+                } else {
+                    swapOrder();
+                }
             }
         });
     }
@@ -35,7 +42,58 @@
     function removeDuplicateNumbers() {
         $('tbody tr td:nth-child(2)').each(function(i, elem) {
             var text = $(elem).text();
-            $(elem).text(text.replace(/^\d+\.\s+/, ''));
+            $(elem).text(text.replace(/\d+\.\s+/, ''));
         });
+    }
+
+    function swapOrder() {
+        $('.control-group')
+            .filter(function(i, elem) {
+                return /\s1\.\s/.test($(elem).text());
+            })
+            .last()
+            .addClass('codilime-swap-order');
+    }
+
+    function autoOrder(settings) {
+        if (settings.orderPrefs) {
+            var newSettings = $.extend({}, settings, {ordered: true});
+            var regFirst = new RegExp(settings.orderPrefsFirst, 'i');
+            var regSecond = new RegExp(settings.orderPrefsSecond, 'i');
+            var menu = $('.control-group');
+            var menuFirstMeals = menu.filter(function(i, elem) { return /ZUPA/i.test($(elem).text()); });
+            var menuSecondMeals = menu.filter(function(i, elem) { return !/ZUPA/i.test($(elem).text()); });
+            var firstMealCandidates = menuFirstMeals.filter(function(i, elem) { return regFirst.test($(elem).text()); });
+            var secondMealCandidates = menuSecondMeals.filter(function(i, elem) { return regSecond.test($(elem).text()); });
+            var random;
+            var firtsMeal;
+            var secondMeal;
+
+            firtsMeal = firstMealCandidates.first();
+            if (firtsMeal.length) {
+                selectMeal(firtsMeal);
+            } else {
+                random = Math.floor(Math.random() * menuFirstMeals.length);
+                selectMeal(menuFirstMeals.get(random));
+            }
+
+            secondMeal = secondMealCandidates.first();
+            if (secondMeal.length) {
+                selectMeal(secondMeal);
+            } else {
+                random = Math.floor(Math.random() * menuSecondMeals.length);
+                selectMeal(menuSecondMeals.get(random));
+            }
+
+            if (prompt('Let\'s order?')) {
+                // todo: ajax
+                $('.form-actions button[type=submit]').click();
+                chrome.storage.sync.set(newSettings);
+            }
+        }
+    }
+
+    function selectMeal(element) {
+        element.find('label').click();
     }
 })(window.$);

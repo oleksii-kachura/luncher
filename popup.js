@@ -1,11 +1,13 @@
 'use strict';
 
-;
 (function($) {
     var defaultSettings = {
         autoOpen: true,
         autoLogin: false,
-        autoOrder: false
+        autoOrder: false,
+        orderPrefsFirst: '',
+        orderPrefsSecond: '',
+        ordered: false
     };
 
     // retrieve settings from chrome storage and initiate popup
@@ -130,5 +132,6 @@
      */
     function representationBlock() {
         adjustPopupHeight();
+        $('input[type=checkbox], .settings-reset').click(adjustPopupHeight);
     }
 })(window.$);

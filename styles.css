@@ -11,7 +11,7 @@ section input[type="checkbox"] { margin-left: 0; vertical-align: text-top; }
 
 section > input:first-child + label ~ * { display: none; }
 section > input:first-child:checked + label ~ * { display: block; margin: 5px 0 0 20px; width: 93.4%; }
-section textarea { height: 21px; }
+section textarea { height: 21px; resize: vertical; }
 
 section > div > div * { display: block; margin: 5px 0 0 0; width: 100%; }
 section > div > div > a { color: black; text-align: center; text-decoration: none; }

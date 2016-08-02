@@ -1,6 +1,5 @@
 'use strict';
 
-;
 (function() {
     var orderPage = 'http://luncher.codilime.com/lunch/menu.html';
 
@@ -12,6 +11,10 @@
 
         if (settings.autoOpen && !settings.ordered && hours < 11) {
             chrome.tabs.create({url: orderPage});
+        }
+        if (hours >= 11) {
+            var newSettings = $.extend({}, settings, {ordered: false});
+            chrome.storage.sync.set(newSettings);
         }
     }
     
