@@ -6,17 +6,17 @@
     chrome.storage.sync.get(null, makeLifeBetter);
 
     function makeLifeBetter(settings) {
-        console.log(settings)
+        console.info('%c' + 'luncher data: ', 'color:#00A539', settings);
+
         $(document).ready(function() {
             settings.autoLogin && autoLogin();
             if (/luncher\.codilime\.com\/$/.test(href)) {
                 removeDuplicateNumbers();
             }
             if (/luncher\.codilime\.com\/lunch\/menu\.html/.test(href)) {
-                if (settings.autoOrder) {
+                swapOrder();
+                if (settings.autoOrder && !settings.ordered) {
                     autoOrder(settings);
-                } else {
-                    swapOrder();
                 }
             }
         });
@@ -56,44 +56,48 @@
     }
 
     function autoOrder(settings) {
-        if (settings.orderPrefs) {
-            var newSettings = $.extend({}, settings, {ordered: true});
+        var newSettings = $.extend({}, settings, {ordered: true});
+        var menu = $('.control-group');
+        var random;
+
+        if (settings.orderPrefsFirst) {
             var regFirst = new RegExp(settings.orderPrefsFirst, 'i');
-            var regSecond = new RegExp(settings.orderPrefsSecond, 'i');
-            var menu = $('.control-group');
             var menuFirstMeals = menu.filter(function(i, elem) { return /ZUPA/i.test($(elem).text()); });
-            var menuSecondMeals = menu.filter(function(i, elem) { return !/ZUPA/i.test($(elem).text()); });
             var firstMealCandidates = menuFirstMeals.filter(function(i, elem) { return regFirst.test($(elem).text()); });
+            var firstMeal;
+
+            firstMeal = firstMealCandidates.first();
+        }
+        if (!firstMeal || !firstMeal.length) {
+            random = Math.floor(Math.random() * menuFirstMeals.length);
+            firstMeal = menuFirstMeals.get(random);
+        }
+        selectMeal(firstMeal);
+
+        if (settings.orderPrefsSecond) {
+            var regSecond = new RegExp(settings.orderPrefsSecond, 'i');
+            var menuSecondMeals = menu.filter(function(i, elem) { return !/ZUPA/i.test($(elem).text()); });
             var secondMealCandidates = menuSecondMeals.filter(function(i, elem) { return regSecond.test($(elem).text()); });
-            var random;
-            var firtsMeal;
             var secondMeal;
 
-            firtsMeal = firstMealCandidates.first();
-            if (firtsMeal.length) {
-                selectMeal(firtsMeal);
-            } else {
-                random = Math.floor(Math.random() * menuFirstMeals.length);
-                selectMeal(menuFirstMeals.get(random));
-            }
-
             secondMeal = secondMealCandidates.first();
-            if (secondMeal.length) {
-                selectMeal(secondMeal);
-            } else {
-                random = Math.floor(Math.random() * menuSecondMeals.length);
-                selectMeal(menuSecondMeals.get(random));
-            }
+        }
+        if (!secondMeal || !secondMeal.length) {
+            random = Math.floor(Math.random() * menuSecondMeals.length);
+            secondMeal = menuSecondMeals.get(random);
+        }
+        selectMeal(secondMeal);
 
-            if (prompt('Let\'s order?')) {
+        setTimeout(function() {
+            if (confirm('Let\'s order?\n\n- ' + $(firstMeal).text().trim() + '\n\n- ' + $(secondMeal).text().trim())) {
                 // todo: ajax
                 $('.form-actions button[type=submit]').click();
                 chrome.storage.sync.set(newSettings);
             }
-        }
+        }, 1000);
     }
 
     function selectMeal(element) {
-        element.find('label').click();
+        $(element).find('label').click();
     }
 })(window.$);
