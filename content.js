@@ -2,20 +2,28 @@
 
 (function($) {
     var href = location.href;
+    var newSettings;
+    var $submitBtn;
 
     chrome.storage.sync.get(null, makeLifeBetter);
 
     function makeLifeBetter(settings) {
-        console.info('%c' + 'luncher data: ', 'color:#00A539', settings);
+        console.info('%c' + 'luncher data: ', 'color:#006cb7', settings);
+
+        newSettings = $.extend({}, settings, {ordered: true});
 
         $(document).ready(function() {
             settings.autoLogin && autoLogin();
             if (/luncher\.codilime\.com\/$/.test(href)) {
                 removeDuplicateNumbers();
             }
-            if (/luncher\.codilime\.com\/lunch\/menu\.html/.test(href)) {
+            if (/luncher\.codilime\.com\/lunch\/menu\.html/.test(href) && !settings.ordered) {
                 swapOrder();
-                if (settings.autoOrder && !settings.ordered) {
+                $submitBtn = $('.form-actions button[type=submit]');
+                $submitBtn.click(function() {
+                    updateStorage(newSettings);
+                });
+                if (settings.autoOrder) {
                     autoOrder(settings);
                 }
             }
@@ -56,7 +64,6 @@
     }
 
     function autoOrder(settings) {
-        var newSettings = $.extend({}, settings, {ordered: true});
         var menu = $('.control-group');
         var random;
 
@@ -90,14 +97,16 @@
 
         setTimeout(function() {
             if (confirm('Let\'s order?\n\n- ' + $(firstMeal).text().trim() + '\n\n- ' + $(secondMeal).text().trim())) {
-                // todo: ajax
-                $('.form-actions button[type=submit]').click();
-                chrome.storage.sync.set(newSettings);
+                $submitBtn.click();
             }
         }, 1000);
     }
 
     function selectMeal(element) {
         $(element).find('label').click();
+    }
+
+    function updateStorage(newSettings) {
+        chrome.storage.sync.set(newSettings);
     }
 })(window.$);
